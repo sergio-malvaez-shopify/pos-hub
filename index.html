@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopify POS: Partner Resource Hub</title>
+<style>
+  :root {
+    --primary: #008060;
+    --primary-dark: #004c3f;
+    --primary-mid: #006e52;
+    --primary-light: #e3f1ec;
+    --accent: #f97316;
+    --accent-light: #fff7ed;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #fff;
+    color: var(--gray-900);
+    line-height: 1.65;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 8px;
+    height: 54px;
+  }
+  .nav-logo {
+    font-size: 14px; font-weight: 700; color: var(--primary-dark);
+    margin-right: 16px; white-space: nowrap; flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo svg { width: 22px; height: 22px; }
+  nav a {
+    font-size: 13px; color: var(--gray-500); text-decoration: none;
+    padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    transition: all .15s;
+  }
+  nav a:hover { background: var(--primary-light); color: var(--primary-dark); }
+  .nav-cta {
+    margin-left: auto; flex-shrink: 0;
+    background: var(--primary); color: #fff !important;
+    font-weight: 600; border-radius: 6px;
+  }
+  .nav-cta:hover { background: var(--primary-dark) !important; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 70%);
+    padding: 72px 32px 56px;
+    color: #fff; text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase;
+    padding: 5px 16px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 52px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 18px; letter-spacing: -.02em;
+  }
+  .hero-sub {
+    font-size: 17px; opacity: .85; max-width: 580px;
+    margin: 0 auto 36px; line-height: 1.6;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+  .btn-primary {
+    background: #fff; color: var(--primary-dark);
+    font-weight: 700; font-size: 14px; padding: 12px 24px;
+    border-radius: 8px; text-decoration: none; transition: opacity .15s;
+  }
+  .btn-primary:hover { opacity: .9; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-weight: 600; font-size: 14px; padding: 12px 24px;
+    border-radius: 8px; text-decoration: none; transition: background .15s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 36px;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; }
+  .stat-label { font-size: 12px; opacity: .65; text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
+
+  /* ── NEW FEATURES STRIP ─────────────────── */
+  .new-strip {
+    background: var(--accent); color: #fff;
+    padding: 12px 32px; text-align: center;
+    font-size: 13.5px; font-weight: 600;
+  }
+  .new-strip a { color: #fff; text-decoration: underline; }
+
+  /* ── LAYOUT ─────────────────────────────── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--gray-200); }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--primary);
+    margin-bottom: 8px;
+  }
+  section h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -.02em; }
+  .section-desc { font-size: 15px; color: var(--gray-500); max-width: 580px; margin-bottom: 32px; line-height: 1.6; }
+
+  /* ── CARDS ──────────────────────────────── */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; }
+
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 24px;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 8px;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: var(--primary); }
+  .card-icon { font-size: 26px; }
+  .card-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--primary); margin-top: 2px;
+  }
+  .card h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .card p { font-size: 13.5px; color: var(--gray-500); line-height: 1.55; flex: 1; }
+  .card-link { font-size: 12.5px; color: var(--primary); font-weight: 600; margin-top: 4px; }
+  .card.featured {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    grid-column: 1 / -1;
+  }
+  .card.featured-single { border-color: var(--primary); background: var(--primary-light); }
+
+  /* ── QUALIFICATION SECTION ─────────────── */
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 680px) { .fit-grid { grid-template-columns: 1fr; } }
+
+  .fit-col { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 24px; }
+  .fit-col.good { border-color: #86efac; background: #f0fdf4; }
+  .fit-col.caution { border-color: #fde68a; background: #fffbeb; }
+  .fit-col h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+  .fit-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .fit-col li { font-size: 13.5px; line-height: 1.45; display: flex; gap: 8px; }
+  .fit-col li .ic { flex-shrink: 0; font-size: 15px; }
+
+  /* ── QUAL TEMPLATE ──────────────────────── */
+  .template-box {
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 28px 32px;
+    position: relative;
+  }
+  .template-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .template-section { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--primary); margin: 18px 0 8px; }
+  .template-q { font-size: 13.5px; color: var(--gray-700); margin-bottom: 6px; line-height: 1.45; padding-left: 14px; position: relative; }
+  .template-q::before { content: "◦"; position: absolute; left: 0; color: var(--gray-400); }
+  .copy-btn {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--primary); color: #fff; border: none;
+    font-size: 12px; font-weight: 600; padding: 6px 14px;
+    border-radius: 6px; cursor: pointer; transition: background .15s;
+  }
+  .copy-btn:hover { background: var(--primary-dark); }
+  .copy-btn.ok { background: #10b981; }
+  #qual-text { position: fixed; left: -9999px; }
+
+  /* ── LAUNCH MILESTONES ──────────────────── */
+  .milestone-list { display: flex; flex-direction: column; gap: 0; }
+  .milestone {
+    display: flex; gap: 20px; padding: 24px 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .milestone:last-child { border-bottom: none; }
+  .milestone-num {
+    flex-shrink: 0; width: 36px; height: 36px;
+    background: var(--primary); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800;
+  }
+  .milestone-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .milestone-content p { font-size: 13.5px; color: var(--gray-500); line-height: 1.55; }
+  .milestone-content ul { font-size: 13.5px; color: var(--gray-500); padding-left: 18px; margin-top: 6px; }
+  .milestone-content li { margin-bottom: 3px; }
+
+  /* ── HARDWARE KITS ──────────────────────── */
+  .kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .kit-card {
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 20px;
+  }
+  .kit-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .kit-card ul { list-style: none; padding: 0; font-size: 13px; color: var(--gray-500); display: flex; flex-direction: column; gap: 5px; }
+  .kit-card li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+
+  /* ── BUILD BLOCKS ───────────────────────── */
+  .build-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .build-card {
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 20px 22px;
+    text-decoration: none; color: inherit;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .build-card:hover { border-color: var(--primary); box-shadow: 0 2px 12px rgba(0,128,96,.1); }
+  .build-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .build-card p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+  code {
+    background: var(--gray-200); color: var(--gray-900);
+    font-family: 'SFMono-Regular', 'Menlo', monospace;
+    font-size: 12px; padding: 2px 6px; border-radius: 4px;
+  }
+
+  /* ── POS EXTENSIONS TARGETS ─────────────── */
+  .target-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .target-card {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .target-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .target-card code { display: block; margin-bottom: 6px; font-size: 11.5px; }
+  .target-card p { font-size: 12.5px; color: var(--gray-500); }
+
+  /* ── PRO vs LITE ─────────────────────────── */
+  .pro-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .pro-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--gray-400); border-bottom: 2px solid var(--gray-200);
+  }
+  .pro-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray-100); }
+  .pro-table tr:last-child td { border-bottom: none; }
+  .check { color: var(--primary); font-weight: 700; }
+  .dash { color: var(--gray-400); }
+
+  /* ── EARN SECTION ───────────────────────── */
+  .earn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 680px) { .earn-grid { grid-template-columns: 1fr; } }
+  .earn-card {
+    background: var(--primary-dark); color: #fff;
+    border-radius: var(--radius); padding: 32px;
+  }
+  .earn-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .earn-card p { font-size: 14px; opacity: .8; line-height: 1.6; }
+  .earn-num { font-size: 48px; font-weight: 900; color: #6ee7b7; line-height: 1; margin-bottom: 6px; }
+
+  /* ── QUICK REF ──────────────────────────── */
+  .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+  .ref-link {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 12px 14px;
+    text-decoration: none; color: var(--gray-700);
+    font-size: 13px; font-weight: 500;
+    transition: border-color .15s, color .15s;
+  }
+  .ref-link:hover { border-color: var(--primary); color: var(--primary-dark); }
+  .ref-link .ic { font-size: 16px; flex-shrink: 0; }
+
+  footer {
+    background: var(--gray-900); color: var(--gray-400);
+    padding: 32px; text-align: center; font-size: 13px;
+  }
+  footer a { color: #6ee7b7; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .card.featured { grid-column: 1; }
+    .hero-stats { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────── -->
+<nav>
+  <span class="nav-logo">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="24" height="24" rx="5" fill="#008060"/>
+      <path d="M8 8h8v8H8z" fill="#fff" opacity=".4"/>
+      <path d="M12 5v3M12 16v3M5 12h3M16 12h3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    POS Partner Hub
+  </span>
+  <a href="#learn">Learn</a>
+  <a href="#qualify">Qualify</a>
+  <a href="#launch">Launch</a>
+  <a href="#hardware">Hardware</a>
+  <a href="#build">Build</a>
+  <a href="#sell">Sell</a>
+  <a href="#earn">Earn</a>
+  <a href="https://partners.shopify.com" target="_blank" class="nav-cta">Partner Portal →</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Shopify Partner Resources — Retail &amp; POS</div>
+  <h1>Shopify POS<br>Partner Resource Hub</h1>
+  <p class="hero-sub">Everything you need to discover, pitch, build, and launch Shopify POS for your retail clients — in one place.</p>
+  <div class="hero-ctas">
+    <a href="#launch" class="btn-primary">Launch checklist →</a>
+    <a href="#qualify" class="btn-secondary">Qualify a merchant</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Countries</div></div>
+    <div class="stat"><div class="stat-num">20</div><div class="stat-label">Languages</div></div>
+    <div class="stat"><div class="stat-num">$500</div><div class="stat-label">Referral Bonus</div></div>
+    <div class="stat"><div class="stat-num">20%</div><div class="stat-label">Revenue Share · 2 yrs</div></div>
+  </div>
+</div>
+
+<div class="new-strip">
+  🆕 <strong>2026 updates:</strong> POS v11.5 · Offline extensions (POS 11.0+) · Direct GraphQL from extensions · Auto app auth · Tap to Pay expansion · <a href="https://www.shopify.com/editions" target="_blank">See all Shopify Editions →</a>
+</div>
+
+<!-- ── 01 LEARN ─────────────────────────────── -->
+<section id="learn">
+  <div class="container">
+    <div class="section-label">01 — Learn</div>
+    <h2>Training &amp; Documentation</h2>
+    <p class="section-desc">Start here. The Academy paths are the recommended backbone for any partner team covering sales, implementation, and operations.</p>
+
+    <div class="grid-3">
+      <a href="https://www.shopifyacademy.com/path/shopify-pos-launch-and-operations" target="_blank" class="card featured-single">
+        <div class="card-icon">🎓</div>
+        <div class="card-tag">Recommended · ~4 hrs · 5 courses</div>
+        <h3>POS Launch &amp; Operations Learning Path</h3>
+        <p>The complete course sequence for your whole team: setup, hardware, staff management, daily operations, and growth optimization. This is the backbone — complete before any client engagement.</p>
+        <div class="card-link">Open in Shopify Academy →</div>
+      </a>
+
+      <a href="https://www.shopifyacademy.com/path/shopify-development-fundamentals" target="_blank" class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-tag">Technical · Required for dev team</div>
+        <h3>Shopify Development Fundamentals</h3>
+        <p>Core Shopify platform knowledge for your technical team before building POS extensions or integrations.</p>
+        <div class="card-link">Open in Shopify Academy →</div>
+      </a>
+
+      <a href="https://www.shopifyacademy.com/path/customizing-the-pos-experience" target="_blank" class="card">
+        <div class="card-icon">🔌</div>
+        <div class="card-tag">Technical · POS extensibility</div>
+        <h3>Customizing the POS Experience</h3>
+        <p>POS UI Extensions course. How to build custom tiles, actions, and embedded workflows inside the Shopify POS app.</p>
+        <div class="card-link">Open in Shopify Academy →</div>
+      </a>
+
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos" target="_blank" class="card">
+        <div class="card-icon">📖</div>
+        <div class="card-tag">Docs</div>
+        <h3>POS Manual &amp; Overview</h3>
+        <p>Complete Help Center documentation — the authoritative reference for merchants and implementation teams.</p>
+        <div class="card-link">Open in Help Center →</div>
+      </a>
+
+      <a href="https://help.shopify.com/en/manual/sell-in-person/getting-started" target="_blank" class="card">
+        <div class="card-icon">🚀</div>
+        <div class="card-tag">Docs · Start here for new clients</div>
+        <h3>Getting Started Guide</h3>
+        <p>Step-by-step guide for first-time Shopify POS setup. Great companion resource to share with merchant stakeholders.</p>
+        <div class="card-link">Open in Help Center →</div>
+      </a>
+
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/faq" target="_blank" class="card">
+        <div class="card-icon">❓</div>
+        <div class="card-tag">Docs · Device requirements inside</div>
+        <h3>POS FAQ</h3>
+        <p>Device compatibility, hardware setup, security, and common technical questions. Reference for presales and support.</p>
+        <div class="card-link">Open in Help Center →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 QUALIFY ────────────────────────────── -->
+<section id="qualify">
+  <div class="container">
+    <div class="section-label">02 — Qualify</div>
+    <h2>Ideal Customer Profile</h2>
+    <p class="section-desc">Use this section to quickly evaluate whether Shopify POS is the right fit before investing in a full scoping conversation.</p>
+
+    <div style="background: var(--primary-light); border: 1px solid #86efac; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px;">
+      <div style="font-size:13px; font-weight:700; color: var(--primary-dark); margin-bottom:8px;">🎯 The sweet spot</div>
+      <div style="font-size:14px; color: var(--gray-700); line-height:1.6;">Shopify as the primary commerce platform (not just a frontend) · $500K+ annual retail GMV · 1–50 store locations · Fashion, specialty retail, beauty, food &amp; beverage, electronics, home goods · Migrating from Square, Lightspeed, Clover, Vend, or NetSuite POS · Needs unified online + in-store inventory</div>
+    </div>
+
+    <div class="fit-grid">
+      <div class="fit-col good">
+        <h3>✅ Great fit — pitch with confidence</h3>
+        <ul>
+          <li><span class="ic">✅</span>Already on Shopify (or migrating) — wants to add in-store</li>
+          <li><span class="ic">✅</span>Needs unified online + in-store inventory management</li>
+          <li><span class="ic">✅</span>Migrating from legacy POS: Square, Lightspeed, Clover, Vend</li>
+          <li><span class="ic">✅</span>Staff turnover is high — needs a simple, quick-to-learn POS</li>
+          <li><span class="ic">✅</span>1–50 store locations with multi-location inventory sync</li>
+          <li><span class="ic">✅</span>Shopify Payments available in their country</li>
+          <li><span class="ic">✅</span>Wants a single system for all channels (D2C + POS + B2B)</li>
+          <li><span class="ic">✅</span>Fashion, beauty, food &amp; beverage, specialty retail, electronics</li>
+          <li><span class="ic">✅</span>Needs BOPIS (buy online, pick up in store)</li>
+          <li><span class="ic">✅</span>Wants tap to pay, gift cards, split payments out of the box</li>
+        </ul>
+      </div>
+      <div class="fit-col caution">
+        <h3>⚠️ Caution — qualify carefully</h3>
+        <ul>
+          <li><span class="ic">⚠️</span>Complex real-time pricing per customer (ERP-synced at checkout)</li>
+          <li><span class="ic">⚠️</span>Advanced promotions engine: tiered loyalty, complex rule stacks</li>
+          <li><span class="ic">⚠️</span>Needs native inventory transfers, POs, replenishment (requires apps or custom build)</li>
+          <li><span class="ic">⚠️</span>Offline-first requirement — POS requires stable internet connectivity</li>
+          <li><span class="ic">⚠️</span>50+ locations with enterprise reporting and advanced back-office</li>
+          <li><span class="ic">⚠️</span>Institutional payment methods (financial aid, government tenders)</li>
+          <li><span class="ic">⚠️</span>Operated in China (not currently supported)</li>
+          <li><span class="ic">⚠️</span>Heavy ERP-first workflow (LS Central, Oracle X-Store model)</li>
+          <li><span class="ic">⚠️</span>Needs custom fiscal/tax device integrations (some EU markets)</li>
+          <li><span class="ic">⚠️</span>Wants Android-first hardware (supported, but iOS is more tested)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- QUALIFICATION TEMPLATE -->
+    <div style="margin-top: 32px;">
+      <h3 style="font-size:18px; font-weight:700; margin-bottom:16px;">Partner Qualification Template</h3>
+      <p style="font-size:14px; color:var(--gray-500); margin-bottom:20px;">Copy-paste this into your discovery call notes or CRM.</p>
+
+      <div class="template-box" id="qual-template">
+        <button class="copy-btn" onclick="copyTemplate()" id="copyBtn">Copy</button>
+        <div class="template-title">Shopify POS — Discovery Qualification</div>
+
+        <div class="template-section">Business Profile</div>
+        <div class="template-q">How many store locations do you currently operate?</div>
+        <div class="template-q">What's your approximate annual retail GMV?</div>
+        <div class="template-q">What industry / product category are you in?</div>
+        <div class="template-q">Do you have an online store? Is it on Shopify?</div>
+
+        <div class="template-section">Current Setup</div>
+        <div class="template-q">What POS system are you using today? How long have you been on it?</div>
+        <div class="template-q">What are the top 3 pain points with your current POS?</div>
+        <div class="template-q">Do you use a separate platform for e-commerce and in-store? How do you sync inventory today?</div>
+        <div class="template-q">What payment terminals do you use? Do you have specific payment provider requirements?</div>
+
+        <div class="template-section">Retail Operations</div>
+        <div class="template-q">How many staff use the POS? What's the staff turnover like?</div>
+        <div class="template-q">Do you offer BOPIS (buy online, pick up in store) or ship-from-store?</div>
+        <div class="template-q">Do you have loyalty or gift card programs? How complex are your promotions?</div>
+        <div class="template-q">Do you do inventory transfers between locations? How do you manage replenishment?</div>
+
+        <div class="template-section">Technical Landscape</div>
+        <div class="template-q">What ERP or backend systems do you use? (SAP, Netsuite, Dynamics, etc.)</div>
+        <div class="template-q">Do you have any custom integrations today that need to carry over?</div>
+        <div class="template-q">Do you have internal development resources, or will you rely on a partner for builds?</div>
+
+        <div class="template-section">Timeline &amp; Decision</div>
+        <div class="template-q">What's driving this evaluation now? Is there a hard deadline or event?</div>
+        <div class="template-q">Who else is involved in the decision? Who owns the final sign-off?</div>
+        <div class="template-q">Are you evaluating other POS solutions in parallel?</div>
+        <div class="template-q">What does success look like 6 months after launch?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 LAUNCH ─────────────────────────────── -->
+<section id="launch">
+  <div class="container">
+    <div class="section-label">03 — Launch</div>
+    <h2>Launch Journey — 5 Milestones</h2>
+    <p class="section-desc">Use the official Retail Launch Journey to track progress with your client across the full implementation. Each milestone maps to a clear set of owner tasks.</p>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:28px;">
+      <a href="https://retail-launch.myshopify.com/pages/getting-started-with-point-of-sale" target="_blank" class="card featured-single">
+        <div class="card-icon">🗺️</div>
+        <div class="card-tag">Recommended · Official Shopify Guide</div>
+        <h3>Retail Launch Hub</h3>
+        <p>Complete 5-milestone launch guide. Use this to track progress and align which tasks your partner owns vs. what Shopify supports.</p>
+        <div class="card-link">Open Retail Launch Hub →</div>
+      </a>
+      <a href="https://help.shopify.com/en/manual/intro-to-shopify/shopify-pos-launch-checklist" target="_blank" class="card">
+        <div class="card-icon">✅</div>
+        <div class="card-tag">Tactical Companion</div>
+        <h3>POS Launch Checklist (Help Center)</h3>
+        <p>Breaks each milestone into granular, tactical tasks. Great for the implementation team to track day-by-day.</p>
+        <div class="card-link">Open checklist →</div>
+      </a>
+    </div>
+
+    <div class="milestone-list">
+      <div class="milestone">
+        <div class="milestone-num">1</div>
+        <div class="milestone-content">
+          <h3>Migrate Your Data</h3>
+          <p>Import products, inventory, barcodes, stock levels, and discounts from the existing system into Shopify.</p>
+          <ul>
+            <li>Product catalog import (CSV or API)</li>
+            <li>Inventory levels by location</li>
+            <li>Barcode / SKU mapping</li>
+            <li>Discount codes and gift cards</li>
+            <li>Customer data (if applicable)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-num">2</div>
+        <div class="milestone-content">
+          <h3>Configure Admin Settings</h3>
+          <p>Set up taxes, shipping, payments, and app integrations before going to store.</p>
+          <ul>
+            <li>Tax configuration by region</li>
+            <li>Shopify Payments + payment provider setup</li>
+            <li>Pickup and local delivery settings</li>
+            <li>App integrations (loyalty, ERP, accounting)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-num">3</div>
+        <div class="milestone-content">
+          <h3>Set Up Shopify POS</h3>
+          <p>Install the app, connect hardware, configure staff accounts, and run a full pre-launch test.</p>
+          <ul>
+            <li>Install POS app on all devices (iOS/Android)</li>
+            <li>Pair and test all hardware</li>
+            <li>Create staff accounts + assign PINs and roles</li>
+            <li>Add products to the POS sales channel</li>
+            <li>Staff training session + end-to-end test transaction</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-num">4</div>
+        <div class="milestone-content">
+          <h3>Launch — Go Live</h3>
+          <p>Open the store and start transacting. Monitor in real time on day one.</p>
+          <ul>
+            <li>Confirm all hardware connected and tested</li>
+            <li>Staff confident on POS flows (returns, exchanges, split payments)</li>
+            <li>Day-one on-site support plan in place</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-num">5</div>
+        <div class="milestone-content">
+          <h3>Post-Launch — Operations &amp; Growth</h3>
+          <p>Day-to-day operations review, performance analysis, and expansion planning.</p>
+          <ul>
+            <li>Order management and returns workflow review</li>
+            <li>Sales performance reporting setup</li>
+            <li>Expansion to additional locations</li>
+            <li>Ongoing staff training cadence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 HARDWARE ────────────────────────────── -->
+<section id="hardware">
+  <div class="container">
+    <div class="section-label">04 — Hardware</div>
+    <h2>Hardware &amp; Devices</h2>
+    <p class="section-desc">Shopify POS runs on iOS and Android only — no desktop or Windows POS. Define the minimum hardware kit by store type early in scoping.</p>
+
+    <div style="background: #fef3c7; border: 1px solid #fde68a; border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; font-size: 14px;">
+      <strong>⚠️ Platform requirement:</strong> Shopify POS runs exclusively on <strong>iOS</strong> (iPhone 7+ / iPad Gen 5+, iPadOS 15.1+) and <strong>Android</strong> (v10.0+). Desktop POS is not supported. Confirm device fleet before scoping.
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 28px;">
+      <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/supported-hardware" target="_blank" class="card">
+        <div class="card-icon">🖥️</div>
+        <div class="card-tag">Docs · Full compatibility list</div>
+        <h3>Supported Hardware</h3>
+        <p>Complete list of supported card readers, receipt printers, barcode scanners, cash drawers, label printers, and device stands — with regional availability by country.</p>
+        <div class="card-link">View supported hardware →</div>
+      </a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/getting-started" target="_blank" class="card">
+        <div class="card-icon">📦</div>
+        <div class="card-tag">Docs · Hardware setup guide</div>
+        <h3>Hardware Getting Started Guide</h3>
+        <p>Pairing, connecting, and testing hardware. Use this during Milestone 3 (POS setup) with the implementation team.</p>
+        <div class="card-link">View hardware guide →</div>
+      </a>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Recommended Kits by Store Type</h3>
+    <div class="kit-grid">
+      <div class="kit-card">
+        <h4>🛍️ Single Store · Pop-up</h4>
+        <ul>
+          <li>iPhone or iPad (any supported)</li>
+          <li>Shopify POS Go or mobile card reader</li>
+          <li>Portable receipt printer (optional)</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🏪 Standard Retail Store</h4>
+        <ul>
+          <li>iPad + stand (Shopify-compatible)</li>
+          <li>Shopify POS Go (staff mobility)</li>
+          <li>Wired card reader (tap / chip / swipe)</li>
+          <li>Receipt printer + cash drawer</li>
+          <li>Barcode scanner</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🏬 Multi-location Chain</h4>
+        <ul>
+          <li>iPad fixed stations + iPhone staff devices</li>
+          <li>Multiple card readers per location</li>
+          <li>Receipt printers + cash drawers</li>
+          <li>Barcode scanner per station</li>
+          <li>Label printer (for inventory ops)</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>📋 Notes &amp; Constraints</h4>
+        <ul>
+          <li>Hardware purchased via Shopify Hardware Store or 3rd-party retailers</li>
+          <li>Regional availability varies — check supported hardware list</li>
+          <li>Card readers should be unpaired if lost or stolen</li>
+          <li>App updates required every 180 days</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 BUILD ──────────────────────────────── -->
+<section id="build">
+  <div class="container">
+    <div class="section-label">05 — Build</div>
+    <h2>Technical Building Blocks</h2>
+    <p class="section-desc">The core APIs and extension framework for building integrations, custom workflows, and embedded POS experiences for your clients.</p>
+
+    <!-- POS Pro vs Lite -->
+    <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">POS Lite vs. POS Pro</h3>
+    <div style="background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius); overflow:hidden; margin-bottom: 32px;">
+      <table class="pro-table">
+        <thead>
+          <tr>
+            <th style="width:50%">Feature</th>
+            <th>POS Lite</th>
+            <th>POS Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sell in-person (basic checkout)</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Split payments &amp; partial payments</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Inventory management per location</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Staff roles and permissions</td><td style="font-size:12px;color:var(--gray-500);">Limited</td><td class="check">✓ Advanced</td></tr>
+          <tr><td>Retrieve draft orders in POS</td><td class="dash">—</td><td class="check">✓ Required</td></tr>
+          <tr><td>Multi-location management</td><td class="dash">—</td><td class="check">✓</td></tr>
+          <tr><td>Advanced reporting</td><td class="dash">—</td><td class="check">✓</td></tr>
+          <tr><td>Customizable Smart Grid</td><td class="dash">—</td><td class="check">✓</td></tr>
+          <tr><td>POS UI Extensions (full)</td><td class="dash">—</td><td class="check">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- POS UI Extensions -->
+    <h3 style="font-size:17px; font-weight:700; margin-bottom:8px;">POS UI Extensions</h3>
+    <p style="font-size:14px; color:var(--gray-500); margin-bottom:16px;">Build custom tiles, actions, and embedded workflows inside Shopify POS. Apps run on iOS and Android using remote-dom web components. <strong>Bundle size limit: 64 KB.</strong> Offline support available (POS 11.0+).</p>
+
+    <div class="target-list" style="margin-bottom:28px;">
+      <div class="target-card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">Home Screen</div>
+        <h4>Smart Grid Tile</h4>
+        <code>pos.home.tile.render</code>
+        <p>Add a custom tile to the POS home screen. Tapping it opens your custom UI in a modal.</p>
+      </div>
+      <div class="target-card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">Order Details</div>
+        <h4>Action Button</h4>
+        <code>pos.order-details.action.render</code>
+        <p>Add an action to the order detail screen — trigger workflows, lookups, or custom flows from a specific order.</p>
+      </div>
+      <div class="target-card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">Product Details</div>
+        <h4>Action Button</h4>
+        <code>pos.product-details.action.render</code>
+        <p>Trigger custom actions from the product detail view — great for lookup tools, warranty flows, or service bookings.</p>
+      </div>
+      <div class="target-card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">Custom Modal</div>
+        <h4>Full-screen UI</h4>
+        <code>Modal (via useExtensionApi)</code>
+        <p>Open a full-screen modal from any target. Build rich UIs with web components aligned to Polaris POS design system.</p>
+      </div>
+    </div>
+
+    <a href="https://shopify.dev/docs/api/pos-ui-extensions" target="_blank" class="card" style="margin-bottom:32px;text-decoration:none;">
+      <div class="card-icon">🔌</div>
+      <div class="card-tag">Developer Docs</div>
+      <h3>POS UI Extensions Reference</h3>
+      <p>Full documentation: targets, APIs, web components, offline capability, GraphQL authentication, and code examples.</p>
+      <div class="card-link">Open developer docs →</div>
+    </a>
+
+    <!-- Core APIs -->
+    <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">Core APIs for POS Integrations</h3>
+    <div class="build-grid">
+      <a href="https://shopify.dev/docs/api/admin-graphql" target="_blank" class="build-card">
+        <h4>⚡ Admin API (GraphQL)</h4>
+        <p>Primary integration layer. Products, inventory, orders, customers, draft orders, locations. Required for any ERP or backend integration.</p>
+      </a>
+      <a href="https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderCreate" target="_blank" class="build-card">
+        <h4>📝 Draft Orders API</h4>
+        <p>Create pre-built orders from your app, retrieve them in POS, and process native checkout — including partial payments. <strong>POS Pro required.</strong></p>
+      </a>
+      <a href="https://shopify.dev/docs/api/admin-rest/latest/resources/webhook" target="_blank" class="build-card">
+        <h4>🔔 Webhooks</h4>
+        <p>Event-driven integrations. Key topics: <code>orders/updated</code>, <code>inventory_levels/update</code>, <code>products/update</code>. Use <code>financial_status</code> to track payment lifecycle.</p>
+      </a>
+      <a href="https://shopify.dev/docs/apps/custom-data/metafields" target="_blank" class="build-card">
+        <h4>🗂️ Metafields &amp; Custom Data</h4>
+        <p>Extend the data model for products, customers, orders, and locations. Store POS-specific attributes, warranty data, repair notes, etc.</p>
+      </a>
+      <a href="https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryLevel" target="_blank" class="build-card">
+        <h4>📦 Inventory API</h4>
+        <p>Multi-location inventory management. Sync stock levels, adjust quantities, and manage inventory across all store locations.</p>
+      </a>
+      <a href="https://shopify.dev/docs/apps/fulfillment/fulfillment-orders-apps" target="_blank" class="build-card">
+        <h4>📬 Fulfillment Orders API</h4>
+        <p>For BOPIS, ship-from-store, and click-and-collect flows. Required for custom fulfillment routing and 3PL integrations.</p>
+      </a>
+    </div>
+
+    <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius: var(--radius); padding:18px 22px; margin-top:20px; font-size:13.5px; color:var(--gray-700);">
+      <strong>⚠️ Known gap — Partial Payments API:</strong> There is currently no API for creating or recording partial payments programmatically. The recommended pattern is: app creates a <strong>draft order via API</strong> → staff retrieves it in POS → processes partial payment natively → track via <code>orders/updated</code> webhook with <code>financial_status: partially_paid → paid</code>.
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 SELL ──────────────────────────────── -->
+<section id="sell">
+  <div class="container">
+    <div class="section-label">06 — Sell &amp; Market</div>
+    <h2>Sales &amp; Competitive Resources</h2>
+    <p class="section-desc">Materials to support discovery, pitching, and competitive conversations with retail prospects.</p>
+
+    <div class="grid-3">
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/payment-management/multiple-partial-payments" target="_blank" class="card">
+        <div class="card-icon">💳</div>
+        <div class="card-tag">Feature Reference</div>
+        <h3>Partial &amp; Split Payments</h3>
+        <p>Native POS feature — staff can split payments across multiple methods or mark orders as partially paid without custom code.</p>
+        <div class="card-link">View docs →</div>
+      </a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/save-retrieve-order" target="_blank" class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-tag">Feature Reference</div>
+        <h3>Save &amp; Retrieve Orders</h3>
+        <p>Lay away, saved carts, and draft order retrieval in POS. Works natively with POS Pro — key for repair, service, and appointment-based retail.</p>
+        <div class="card-link">View docs →</div>
+      </a>
+      <a href="https://www.shopify.com/pos/compare" target="_blank" class="card">
+        <div class="card-icon">⚔️</div>
+        <div class="card-tag">Competitive</div>
+        <h3>POS Comparison Page</h3>
+        <p>Shopify's official comparison against competitors (Square, Lightspeed, etc.). Good starting point for competitive conversations.</p>
+        <div class="card-link">View comparison →</div>
+      </a>
+      <a href="https://www.shopify.com/pos" target="_blank" class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-tag">Product Page</div>
+        <h3>Shopify POS Product Page</h3>
+        <p>Public-facing product overview. Useful for sharing with merchant stakeholders who need a quick introduction.</p>
+        <div class="card-link">View product page →</div>
+      </a>
+      <a href="https://help.shopify.com/en/partners/getting-started/promoting-your-services" target="_blank" class="card">
+        <div class="card-icon">📣</div>
+        <div class="card-tag">Partner Resources</div>
+        <h3>Promoting Your POS Services</h3>
+        <p>Official guidance for partners on how to market Shopify POS services — listing on Partner Directory, case studies, and more.</p>
+        <div class="card-link">View guide →</div>
+      </a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/payment-management" target="_blank" class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-tag">Feature Reference</div>
+        <h3>POS Payment Management</h3>
+        <p>Supported payment methods, tipping, refunds, exchanges, and payment provider requirements. Essential for scoping payment flows.</p>
+        <div class="card-link">View docs →</div>
+      </a>
+    </div>
+
+    <!-- Competitive Cheat Sheet -->
+    <div style="margin-top:32px;">
+      <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">Competitive Quick Reference</h3>
+      <div class="grid-2">
+        <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius); padding:20px 22px;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">vs. Square POS</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.6;">
+            <div style="margin-bottom:6px;"><strong>Shopify wins:</strong> Unified commerce (online + in-store), Shopify Plus ecosystem, B2B + POS on one platform, custom extensions, omnichannel reporting</div>
+            <div><strong>Watch out for:</strong> Square hardware is often already purchased; Square free tier appeal for very small merchants</div>
+          </div>
+        </div>
+        <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius); padding:20px 22px;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">vs. Lightspeed / NetSuite POS / LS Central</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.6;">
+            <div style="margin-bottom:6px;"><strong>Shopify wins:</strong> Ease of use, speed of implementation, online commerce strength, app ecosystem, modern API stack, lower total cost</div>
+            <div><strong>Watch out for:</strong> Merchants with advanced inventory (transfers, POs, replenishment) may need app layers; Lightspeed has deeper retail-specific features out of the box</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 EARN ──────────────────────────────── -->
+<section id="earn" style="background: var(--primary-dark); border-bottom: none;">
+  <div class="container">
+    <div class="section-label" style="color:#6ee7b7;">07 — Earn</div>
+    <h2 style="color:#fff;">Partner Revenue Model</h2>
+    <p class="section-desc" style="color:#94d3bc;">Two ways to earn from every Shopify POS deal you bring in.</p>
+
+    <div class="earn-grid">
+      <div class="earn-card" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);">
+        <div class="earn-num">$500</div>
+        <h3>Referral Bonus</h3>
+        <p>Earn a one-time $500 USD bonus for every qualifying merchant you refer to Shopify. No minimum GMV required — just a successful referral through the Partner Portal.</p>
+        <a href="https://partners.shopify.com/portal/resources/referrals" target="_blank" style="display:inline-block;margin-top:14px;background:rgba(255,255,255,0.15);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;">Submit a referral →</a>
+      </div>
+      <div class="earn-card" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);">
+        <div class="earn-num">20%</div>
+        <h3>Revenue Share · 2 Years</h3>
+        <p>Earn 20% of the subscription revenue for the first 2 years on every merchant you refer. For a 10-store merchant on POS Pro, that adds up to meaningful recurring revenue.</p>
+        <a href="https://partners.shopify.com" target="_blank" style="display:inline-block;margin-top:14px;background:rgba(255,255,255,0.15);color:#fff;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;">Go to Partner Portal →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUICK REFERENCE ────────────────────────── -->
+<section style="border-bottom:none;">
+  <div class="container">
+    <div class="section-label">Quick Reference</div>
+    <h2>All Key Links</h2>
+    <p class="section-desc">Everything in one place.</p>
+
+    <div class="ref-grid">
+      <a href="https://www.shopifyacademy.com/path/shopify-pos-launch-and-operations" target="_blank" class="ref-link"><span class="ic">🎓</span>POS Launch &amp; Ops Path</a>
+      <a href="https://www.shopifyacademy.com/path/customizing-the-pos-experience" target="_blank" class="ref-link"><span class="ic">🔌</span>Customizing POS (course)</a>
+      <a href="https://www.shopifyacademy.com/path/shopify-development-fundamentals" target="_blank" class="ref-link"><span class="ic">⚙️</span>Dev Fundamentals (course)</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos" target="_blank" class="ref-link"><span class="ic">📖</span>POS Manual (Help Center)</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/getting-started" target="_blank" class="ref-link"><span class="ic">🚀</span>POS Getting Started</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/faq" target="_blank" class="ref-link"><span class="ic">❓</span>POS FAQ</a>
+      <a href="https://retail-launch.myshopify.com/pages/getting-started-with-point-of-sale" target="_blank" class="ref-link"><span class="ic">🗺️</span>Retail Launch Hub</a>
+      <a href="https://help.shopify.com/en/manual/intro-to-shopify/shopify-pos-launch-checklist" target="_blank" class="ref-link"><span class="ic">✅</span>POS Launch Checklist</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/supported-hardware" target="_blank" class="ref-link"><span class="ic">🖥️</span>Supported Hardware</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/getting-started" target="_blank" class="ref-link"><span class="ic">📦</span>Hardware Getting Started</a>
+      <a href="https://shopify.dev/docs/api/pos-ui-extensions" target="_blank" class="ref-link"><span class="ic">🔌</span>POS UI Extensions API</a>
+      <a href="https://shopify.dev/docs/api/admin-graphql" target="_blank" class="ref-link"><span class="ic">⚡</span>Admin API (GraphQL)</a>
+      <a href="https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderCreate" target="_blank" class="ref-link"><span class="ic">📝</span>Draft Order API</a>
+      <a href="https://shopify.dev/docs/api/admin-rest/latest/resources/webhook" target="_blank" class="ref-link"><span class="ic">🔔</span>Webhooks</a>
+      <a href="https://shopify.dev/docs/apps/custom-data/metafields" target="_blank" class="ref-link"><span class="ic">🗂️</span>Metafields</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/payment-management/multiple-partial-payments" target="_blank" class="ref-link"><span class="ic">💳</span>Partial Payments (POS)</a>
+      <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/save-retrieve-order" target="_blank" class="ref-link"><span class="ic">🔄</span>Save &amp; Retrieve Orders</a>
+      <a href="https://www.shopify.com/editions" target="_blank" class="ref-link"><span class="ic">🆕</span>Shopify Editions / Changelog</a>
+      <a href="https://partners.shopify.com" target="_blank" class="ref-link"><span class="ic">🤝</span>Partner Portal</a>
+      <a href="https://www.shopify.com/pos/compare" target="_blank" class="ref-link"><span class="ic">⚔️</span>POS Competitor Comparison</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Shopify POS: Partner Resource Hub · Compiled by <strong>Sergio Vázquez</strong> · PSE Team · April 2026</div>
+  <div style="margin-top:8px; opacity:.6;">For partner use only. All links point to official Shopify public documentation.</div>
+</footer>
+
+<textarea id="qual-text"></textarea>
+<script>
+function copyTemplate() {
+  const btn = document.getElementById('copyBtn');
+  const template = `Shopify POS — Discovery Qualification
+
+BUSINESS PROFILE
+- How many store locations do you currently operate?
+- What's your approximate annual retail GMV?
+- What industry / product category are you in?
+- Do you have an online store? Is it on Shopify?
+
+CURRENT SETUP
+- What POS system are you using today? How long have you been on it?
+- What are the top 3 pain points with your current POS?
+- Do you use a separate platform for e-commerce and in-store? How do you sync inventory today?
+- What payment terminals do you use? Do you have specific payment provider requirements?
+
+RETAIL OPERATIONS
+- How many staff use the POS? What's the staff turnover like?
+- Do you offer BOPIS (buy online, pick up in store) or ship-from-store?
+- Do you have loyalty or gift card programs? How complex are your promotions?
+- Do you do inventory transfers between locations? How do you manage replenishment?
+
+TECHNICAL LANDSCAPE
+- What ERP or backend systems do you use? (SAP, Netsuite, Dynamics, etc.)
+- Do you have any custom integrations today that need to carry over?
+- Do you have internal development resources, or will you rely on a partner for builds?
+
+TIMELINE & DECISION
+- What's driving this evaluation now? Is there a hard deadline or event?
+- Who else is involved in the decision? Who owns the final sign-off?
+- Are you evaluating other POS solutions in parallel?
+- What does success look like 6 months after launch?`;
+
+  const ta = document.getElementById('qual-text');
+  ta.value = template;
+  ta.select();
+  document.execCommand('copy');
+
+  btn.textContent = '✓ Copied!';
+  btn.classList.add('ok');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2000);
+}
+</script>
+</body>
+</html>
