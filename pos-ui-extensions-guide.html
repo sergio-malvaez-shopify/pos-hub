@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS UI Extensions — Technical Guide for Partners</title>
+<style>
+  :root {
+    --primary: #008060;
+    --primary-dark: #004c3f;
+    --primary-mid: #006e52;
+    --primary-light: #e3f1ec;
+    --accent: #f97316;
+    --accent-light: #fff7ed;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --red-50: #fef2f2;
+    --red-200: #fecaca;
+    --red-600: #dc2626;
+    --yellow-50: #fffbeb;
+    --yellow-200: #fde68a;
+    --yellow-600: #d97706;
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #fff;
+    color: var(--gray-900);
+    line-height: 1.65;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 8px;
+    height: 54px;
+  }
+  .nav-logo {
+    font-size: 14px; font-weight: 700; color: var(--primary-dark);
+    margin-right: 16px; white-space: nowrap; flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo svg { width: 22px; height: 22px; }
+  nav a {
+    font-size: 13px; color: var(--gray-500); text-decoration: none;
+    padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    transition: all .15s;
+  }
+  nav a:hover { background: var(--primary-light); color: var(--primary-dark); }
+  .nav-cta {
+    margin-left: auto; flex-shrink: 0;
+    background: var(--primary); color: #fff !important;
+    font-weight: 600; border-radius: 6px;
+  }
+  .nav-cta:hover { background: var(--primary-dark) !important; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 70%);
+    padding: 72px 32px 56px;
+    color: #fff; text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase;
+    padding: 5px 16px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 18px; letter-spacing: -.02em;
+  }
+  .hero-sub {
+    font-size: 17px; opacity: .85; max-width: 600px;
+    margin: 0 auto 36px; line-height: 1.6;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+  .btn-primary {
+    background: #fff; color: var(--primary-dark);
+    font-weight: 700; font-size: 14px; padding: 12px 24px;
+    border-radius: 8px; text-decoration: none; transition: opacity .15s;
+  }
+  .btn-primary:hover { opacity: .9; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-weight: 600; font-size: 14px; padding: 12px 24px;
+    border-radius: 8px; text-decoration: none; transition: background .15s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 36px;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; }
+  .stat-label { font-size: 12px; opacity: .65; text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
+
+  /* ── LAYOUT ─────────────────────────────── */
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--gray-200); }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--primary);
+    margin-bottom: 8px;
+  }
+  section h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -.02em; }
+  .section-desc { font-size: 15px; color: var(--gray-500); max-width: 600px; margin-bottom: 32px; line-height: 1.6; }
+
+  /* ── CARDS ──────────────────────────────── */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; }
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 24px;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 8px;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: var(--primary); }
+  .card-icon { font-size: 26px; }
+  .card-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--primary); margin-top: 2px;
+  }
+  .card h3 { font-size: 15px; font-weight: 700; line-height: 1.3; }
+  .card p { font-size: 13.5px; color: var(--gray-500); line-height: 1.55; flex: 1; }
+  .card-link { font-size: 12.5px; color: var(--primary); font-weight: 600; margin-top: 4px; }
+
+  /* ── CODE BLOCKS ────────────────────────── */
+  pre {
+    background: var(--gray-900); color: #e5e7eb;
+    border-radius: var(--radius); padding: 20px 24px;
+    font-size: 12.5px; line-height: 1.7; overflow-x: auto;
+    margin: 16px 0;
+  }
+  code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+  .inline-code {
+    background: var(--gray-100); color: var(--primary-dark);
+    padding: 2px 6px; border-radius: 4px; font-size: .88em;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  }
+  .code-label {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: -8px;
+  }
+  .code-filename {
+    font-size: 11px; font-weight: 600; color: var(--gray-500);
+    letter-spacing: .04em; padding: 8px 0 0;
+  }
+  .copy-code {
+    background: none; border: 1px solid var(--gray-200);
+    font-size: 11px; font-weight: 600; color: var(--gray-500);
+    padding: 4px 10px; border-radius: 5px; cursor: pointer;
+    transition: all .15s; margin-top: 8px;
+  }
+  .copy-code:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+
+  /* comment color in code blocks */
+  .cm { color: #6b7280; }
+  .kw { color: #93c5fd; }
+  .st { color: #86efac; }
+  .fn { color: #fde68a; }
+  .co { color: #f9a8d4; }
+
+  /* ── TABLES ─────────────────────────────── */
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    background: var(--gray-50); padding: 10px 14px;
+    text-align: left; font-size: 11px; font-weight: 700;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--gray-500);
+    border-bottom: 2px solid var(--gray-200);
+  }
+  td {
+    padding: 11px 14px; border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .badge-yes { color: #16a34a; font-weight: 700; }
+  .badge-no { color: #dc2626; font-weight: 700; }
+  .badge-partial { color: #d97706; font-weight: 700; }
+
+  /* ── CALLOUTS ───────────────────────────── */
+  .callout {
+    border-left: 4px solid; border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px; margin: 20px 0; font-size: 14px; line-height: 1.6;
+  }
+  .callout.warn { border-color: #f59e0b; background: var(--yellow-50); color: #92400e; }
+  .callout.danger { border-color: #dc2626; background: var(--red-50); color: #991b1b; }
+  .callout.info { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); }
+  .callout strong { display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ── LIMITATION CARDS ───────────────────── */
+  .limit-card {
+    border: 1px solid var(--red-200); background: var(--red-50);
+    border-radius: var(--radius); padding: 24px; margin-bottom: 16px;
+  }
+  .limit-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .limit-badge {
+    background: var(--red-600); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
+  }
+  .limit-card h3 { font-size: 15px; font-weight: 700; color: #991b1b; }
+  .limit-card p { font-size: 13.5px; color: var(--gray-700); margin-bottom: 12px; }
+  .workaround-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 8px;
+  }
+
+  /* ── FAQ ────────────────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--gray-200); padding: 20px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .faq-q:hover { color: var(--primary); }
+  .faq-toggle { font-size: 20px; color: var(--gray-400); flex-shrink: 0; transition: transform .2s; }
+  .faq-a { font-size: 13.5px; color: var(--gray-700); line-height: 1.65; margin-top: 12px; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+  /* ── CHECKLIST ──────────────────────────── */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+  .checklist li::before {
+    content: "☐"; font-size: 16px; color: var(--gray-400); flex-shrink: 0; line-height: 1.4;
+  }
+
+  /* ── ROADMAP BADGES ─────────────────────── */
+  .roadmap-grid { display: flex; flex-direction: column; gap: 10px; }
+  .roadmap-item { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+  .rm-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px;
+    letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; width: 90px; text-align: center;
+  }
+  .rm-shipped { background: #dcfce7; color: #166534; }
+  .rm-roadmap { background: #fef9c3; color: #854d0e; }
+  .rm-research { background: #ede9fe; color: #5b21b6; }
+  .rm-none { background: var(--gray-100); color: var(--gray-500); }
+
+  /* ── RESOURCES ──────────────────────────── */
+  .resource-list { display: flex; flex-direction: column; gap: 10px; }
+  .resource-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; border: 1px solid var(--gray-200);
+    border-radius: var(--radius); text-decoration: none; color: inherit;
+    transition: border-color .15s, background .15s;
+  }
+  .resource-item:hover { border-color: var(--primary); background: var(--primary-light); }
+  .resource-icon { font-size: 20px; flex-shrink: 0; }
+  .resource-name { font-size: 14px; font-weight: 600; }
+  .resource-desc { font-size: 12.5px; color: var(--gray-500); }
+  .resource-arrow { margin-left: auto; color: var(--gray-400); flex-shrink: 0; }
+
+  /* ── FOOTER ─────────────────────────────── */
+  footer {
+    padding: 40px 32px; text-align: center;
+    color: var(--gray-400); font-size: 13px;
+    border-top: 1px solid var(--gray-200);
+  }
+  footer a { color: var(--primary); text-decoration: none; }
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 640px) {
+    nav a:not(.nav-cta):not(:first-of-type) { display: none; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero { padding: 48px 20px 40px; }
+    section { padding: 48px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <span class="nav-logo">
+    <svg viewBox="0 0 109 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M74.7 14.8s-.3-1.4-1.5-1.4c-.2 0-3.5.5-3.5.5-.3 0-2.3-2.3-2.9-2.4-.5 0-1.1-.1-1.6 0-3.8-10.3-10.5-14.9-10.5-14.9S48.4.1 42.3 9.8c-4.4 6.9-6.2 15.6-6.7 21.3L23.4 34.6c-3.8 1.2-3.9 1.3-4.4 4.9C18.6 42.3 7 131.3 7 131.3l68 12.7 36.7-9.1S74.7 14.8 74.7 14.8zm-13.3 4.1c0 .1-3.2 1-6.5 2-.1-3.6-.5-8.7-2.2-13 5.6 1 8.7 7.3 8.7 11zm-10 3.1l-13.1 4c1.3-4.8 3.7-9.6 8.3-12.4.6 2.7 3.9 6.5 4.8 8.4zm-5.8-18C47 5.6 50.4 8 53.1 13.1c-5.8 3.2-8.5 9.2-9.8 14.4l-8.9 2.7c1.7-7.8 7.2-21.2 16-21.2z" fill="#008060"/>
+    </svg>
+    POS Partner Hub
+  </span>
+  <a href="#why">Why POS</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#targets">Targets</a>
+  <a href="#apis">APIs</a>
+  <a href="#offline">Offline</a>
+  <a href="#dev">Dev Guide</a>
+  <a href="#limitations">Limitations</a>
+  <a href="#faq">FAQ</a>
+  <a href="https://shopify.dev/docs/apps/build/pos" target="_blank" class="nav-cta">Docs ↗</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Technical Reference · July 2026</div>
+  <h1>POS UI Extensions</h1>
+  <p class="hero-sub">Everything you need to build production-ready extensions — architecture, targets, APIs, critical gotchas, workarounds, and answers to the hardest partner questions.</p>
+  <div class="hero-ctas">
+    <a href="#dev" class="btn-primary">Quickstart Guide</a>
+    <a href="#limitations" class="btn-secondary">Known Limitations</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">34</div>
+      <div class="stat-label">Extension Targets</div>
+    </div>
+    <div>
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Available APIs</div>
+    </div>
+    <div>
+      <div class="stat-num">iOS + Android</div>
+      <div class="stat-label">One Codebase</div>
+    </div>
+    <div>
+      <div class="stat-num">&lt;1s</div>
+      <div class="stat-label">Native Load Time</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY POS UI EXTENSIONS ────────────────────────────── -->
+<section id="why">
+  <div class="container">
+    <div class="section-label">The Case for Building</div>
+    <h2>Why POS UI Extensions?</h2>
+    <p class="section-desc">Traditional embedded apps load as web views inside POS — 3-5 second load times, inconsistent UI, no offline support. POS UI Extensions change the equation entirely.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-tag">Performance</div>
+        <h3>Native speed, always</h3>
+        <p>Extensions render as native components with local caching. Instant load vs 3-5s for web views. At a register where every second counts, this matters.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <div class="card-tag">Consistency</div>
+        <h3>Automatic Polaris design</h3>
+        <p>Extensions automatically adopt the Shopify POS design system. Staff doesn't need to learn a different UI — everything feels like it belongs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📍</div>
+        <div class="card-tag">Integration</div>
+        <h3>Deep workflow integration</h3>
+        <p>34 extension targets put your functionality exactly where staff needs it — Smart Grid, Cart, Product Details, Customer Profile, Receipts, and more.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <div class="card-tag">Cross-Platform</div>
+        <h3>iOS and Android, one build</h3>
+        <p>Write once, runs identically on both platforms. Lower development cost, easier maintenance, no platform-specific bugs to chase down.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📶</div>
+        <div class="card-tag">Resilience</div>
+        <h3>Designed for offline</h3>
+        <p>Stores lose internet. Extensions that plan for it keep working. The Storage and Connectivity APIs let you build graceful offline fallbacks.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔮</div>
+        <div class="card-tag">Future-Proof</div>
+        <h3>The platform's direction</h3>
+        <p>App Bridge (legacy embedded apps) is being deprecated. POS UI Extensions are where Shopify is investing — build here, not on legacy infrastructure.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="section-label">vs. Legacy App Bridge</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>POS UI Extensions</th>
+              <th>App Bridge (Legacy)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Load time</td><td class="badge-yes">&lt;1s (native)</td><td class="badge-no">3–5s (web view)</td></tr>
+            <tr><td>Design consistency</td><td class="badge-yes">Automatic (Polaris)</td><td class="badge-partial">Manual implementation</td></tr>
+            <tr><td>Offline capable</td><td class="badge-yes">Yes (with planning)</td><td class="badge-no">No</td></tr>
+            <tr><td>iOS + Android</td><td class="badge-yes">One codebase</td><td class="badge-partial">Varies</td></tr>
+            <tr><td>Integration depth</td><td class="badge-yes">34 targets</td><td class="badge-no">Limited</td></tr>
+            <tr><td>Long-term support</td><td class="badge-yes">Platform investment</td><td class="badge-no">Being deprecated</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARCHITECTURE ──────────────────────────────────────── -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2>Architecture</h2>
+    <p class="section-desc">Understanding the runtime model is essential for making good decisions about offline behavior, bundle size, and API usage.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="code-label"><span class="code-filename">Runtime stack</span></div>
+        <pre><code>POS App (iOS / Android)
+  └── Extension Host (WebView)
+        └── RemoteDOM Sandbox
+              └── Your Extension (JS bundle from CDN)
+                    └── POS APIs
+                          (Cart, Customer, Session…)</code></pre>
+
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="card" style="padding: 16px;">
+            <div class="card-tag">Step 1 — Deploy</div>
+            <p>Your extension publishes as a JS bundle to Shopify CDN via <span class="inline-code">shopify app deploy</span>.</p>
+          </div>
+          <div class="card" style="padding: 16px;">
+            <div class="card-tag">Step 2 — Discovery</div>
+            <p>POS registers installed extensions in its local DB at app startup.</p>
+          </div>
+          <div class="card" style="padding: 16px;">
+            <div class="card-tag">Step 3 — Load</div>
+            <p>When a target activates (staff taps Smart Grid tile, opens cart, etc.), POS fetches and runs your bundle.</p>
+          </div>
+          <div class="card" style="padding: 16px;">
+            <div class="card-tag">Step 4 — Render</div>
+            <p>RemoteDOM translates your components to native POS UI — no raw web view, real native rendering.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="callout info">
+          <strong>Security Model</strong>
+          Extensions run in an isolated RemoteDOM sandbox. They have no access to the device filesystem, other apps, or any data outside the POS APIs explicitly exposed by Shopify.
+        </div>
+
+        <div class="callout warn" style="margin-top: 16px;">
+          <strong>Bundle Size Limit</strong>
+          Each extension bundle is capped at <strong>64KB compressed</strong>. The UI framework runtime consumes ~92% of that budget — leaving you ~5KB for your own code. Plan accordingly. See the <a href="#limitations">Limitations section</a> for workarounds.
+        </div>
+
+        <div style="margin-top: 20px;">
+          <div class="section-label" style="margin-bottom: 12px;">POS Pro Required</div>
+          <p style="font-size: 14px; color: var(--gray-700); line-height: 1.65;">POS UI Extensions require <strong>POS Pro</strong>. App Bridge (legacy embedded apps) works on Lite, but that's the surface being deprecated. If a merchant asks about extensions and they're on Lite, this is an upgrade conversation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TARGETS ───────────────────────────────────────────── -->
+<section id="targets">
+  <div class="container">
+    <div class="section-label">Extension Targets</div>
+    <h2>Where your extension can live</h2>
+    <p class="section-desc">Targets are the specific entry points in POS where your extension appears. There are 34 total, organized into three types.</p>
+
+    <div class="grid-3" style="margin-bottom: 32px;">
+      <div class="card" style="border-color: var(--primary); background: var(--primary-light);">
+        <div class="card-icon">🏠</div>
+        <div class="card-tag">Type 1</div>
+        <h3>Tile Targets</h3>
+        <p>Persistent tiles on the Smart Grid homepage. Staff sees them when they open POS. Best for: quick access, status indicators, workflow entry points.</p>
+        <code class="inline-code" style="font-size: 11px; margin-top: 4px;">pos.home.tile.render</code>
+      </div>
+      <div class="card" style="border-color: #7c3aed; background: #f5f3ff;">
+        <div class="card-icon">📋</div>
+        <div class="card-tag">Type 2</div>
+        <h3>Action Targets</h3>
+        <p>Modals (full-screen overlay) or menu items in contextual screens. Staff triggers them on demand. Best for: multi-step workflows, forms, data entry.</p>
+        <code class="inline-code" style="font-size: 11px; margin-top: 4px;">pos.*.action.render</code>
+      </div>
+      <div class="card" style="border-color: #0891b2; background: #ecfeff;">
+        <div class="card-icon">📌</div>
+        <div class="card-tag">Type 3</div>
+        <h3>Block Targets</h3>
+        <p>Inline content sections embedded inside native POS screens. Always visible when that screen is open. Best for: contextual metrics, instructions, read-only info.</p>
+        <code class="inline-code" style="font-size: 11px; margin-top: 4px;">pos.*.block.render</code>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <strong>Critical Gotcha — Block targets are read-only</strong>
+      Block extensions (inline content) cannot modify the cart, customer, or any POS data. They are display-only. If you need an action from a block, launch a modal (action target) from within it.
+    </div>
+
+    <div class="table-wrap" style="margin-top: 24px;">
+      <table>
+        <thead>
+          <tr><th>Target</th><th>Type</th><th>Where it appears</th><th>Can modify cart?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>pos.home.tile.render</code></td><td>Tile</td><td>Smart Grid homepage</td><td>—</td></tr>
+          <tr><td><code>pos.home.modal.render</code></td><td>Action</td><td>Launched from home tile</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.cart-details.block.render</code></td><td>Block</td><td>Cart screen (inline)</td><td class="badge-no">No (read-only)</td></tr>
+          <tr><td><code>pos.cart-details.action.render</code></td><td>Action</td><td>Cart screen (modal)</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.cart-details.action.menu-item.render</code></td><td>Action</td><td>Cart screen menu</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.product-details.block.render</code></td><td>Block</td><td>Product details (inline)</td><td class="badge-no">No</td></tr>
+          <tr><td><code>pos.product-details.action.render</code></td><td>Action</td><td>Product details (modal)</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.customer-details.block.render</code></td><td>Block</td><td>Customer profile (inline)</td><td class="badge-no">No</td></tr>
+          <tr><td><code>pos.customer-details.action.render</code></td><td>Action</td><td>Customer profile (modal)</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.order-details.block.render</code></td><td>Block</td><td>Order details (inline)</td><td class="badge-no">No</td></tr>
+          <tr><td><code>pos.order-details.action.render</code></td><td>Action</td><td>Order details (modal)</td><td class="badge-yes">Yes</td></tr>
+          <tr><td><code>pos.purchase.receipt.render</code></td><td>Block</td><td>Receipt (inline)</td><td class="badge-no">No</td></tr>
+          <tr><td colspan="4" style="color: var(--gray-400); font-size: 12px; font-style: italic; text-align: center;">+ 22 additional targets across post-purchase, return, exchange flows</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── APIs ──────────────────────────────────────────────── -->
+<section id="apis">
+  <div class="container">
+    <div class="section-label">APIs</div>
+    <h2>What your extension can access</h2>
+    <p class="section-desc">APIs are the bridge between your extension and POS data. Some are available everywhere; others are scoped to specific targets. Offline availability varies — see the next section.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="section-label" style="margin-bottom: 12px;">Base APIs (all targets)</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>API</th><th>What it does</th><th>Offline</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Session</strong></td><td>Auth tokens, session info, staff ID</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Storage</strong></td><td>Local persistence (100 entries, 1MB/value)</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Toast</strong></td><td>Show notifications to the user</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Locale</strong></td><td>Language and localization</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Connectivity</strong></td><td>Network status detection</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Device</strong></td><td>iOS/Android device info</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Scanner</strong></td><td>Barcode/QR scanning</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Navigation</strong></td><td>Multi-screen navigation within extension</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Action</strong></td><td>Open/dismiss modals</td><td class="badge-yes">✓</td></tr>
+              <tr><td><strong>Direct API</strong></td><td>Admin GraphQL from extension</td><td class="badge-no">✗</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom: 12px;">Scoped APIs (target-specific)</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>API</th><th>Required target</th><th>Offline</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Cart</strong></td><td>cart-details.action.*</td><td class="badge-no">✗</td></tr>
+              <tr><td><strong>Product</strong></td><td>product-details.*</td><td class="badge-no">✗</td></tr>
+              <tr><td><strong>Customer</strong></td><td>customer-details.*</td><td class="badge-no">✗</td></tr>
+              <tr><td><strong>Order</strong></td><td>order-details.*</td><td class="badge-no">✗</td></tr>
+              <tr><td><strong>Print</strong></td><td>purchase.receipt.render</td><td class="badge-partial">Partial</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info" style="margin-top: 16px;">
+          <strong>Authentication pattern</strong>
+          Use <span class="inline-code">api.session.getSessionToken()</span> to get a short-lived token for your backend calls. Verify it server-side via Shopify's Session Token API. Never hard-code credentials in the extension.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OFFLINE ────────────────────────────────────────────── -->
+<section id="offline">
+  <div class="container">
+    <div class="section-label">The Critical Gotcha</div>
+    <h2>Offline support</h2>
+    <p class="section-desc">Stores lose internet. Extensions that don't plan for it break at the worst possible moment — in front of a customer, mid-transaction. This is the #1 thing that separates good POS extensions from great ones.</p>
+
+    <div class="callout danger">
+      <strong>Don't assume you have internet</strong>
+      POS devices operate in retail environments where connectivity is intermittent. Any extension that makes uncached external API calls will fail when the network drops. Plan your offline strategy before you write a single line of code.
+    </div>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div>
+        <div class="section-label" style="margin-bottom: 12px; color: #16a34a;">Works offline</div>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #16a34a; font-weight: 700;">✓</span> UI rendering (always available)</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #16a34a; font-weight: 700;">✓</span> Storage API (read/write local data)</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #16a34a; font-weight: 700;">✓</span> Locale, Toast, Connectivity, Device</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #16a34a; font-weight: 700;">✓</span> Scanner, Navigation, Action, PinPad</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #16a34a; font-weight: 700;">✓</span> Cash Drawer</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom: 12px; color: #dc2626;">Does NOT work offline</div>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #dc2626; font-weight: 700;">✗</span> External fetch() calls to your backend</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #dc2626; font-weight: 700;">✗</span> Admin API / Direct API (GraphQL)</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #dc2626; font-weight: 700;">✗</span> Cart, Customer, Order APIs</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #dc2626; font-weight: 700;">✗</span> OAuth / app authentication</li>
+          <li style="display: flex; gap: 8px; font-size: 14px;"><span style="color: #dc2626; font-weight: 700;">✗</span> Gift card validation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="section-label" style="margin-bottom: 8px;">Recommended pattern: cache + queue</div>
+      <div class="code-label">
+        <span class="code-filename">offline-pattern.ts</span>
+        <button class="copy-code" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre><code><span class="kw">import</span> { useConnectivity, useStorage } <span class="kw">from</span> <span class="st">'@shopify/ui-extensions-react/point-of-sale'</span>;
+
+<span class="kw">const</span> { isConnected } = useConnectivity();
+<span class="kw">const</span> storage = useStorage();
+
+<span class="cm">// When online: pre-cache critical data and flush queue</span>
+useEffect(() => {
+  <span class="kw">if</span> (isConnected) {
+    <span class="cm">// 1. Refresh cache</span>
+    <span class="kw">const</span> data = <span class="kw">await</span> <span class="fn">fetchCriticalData</span>();
+    <span class="kw">await</span> storage.<span class="fn">set</span>(<span class="st">'cached_data'</span>, JSON.<span class="fn">stringify</span>(data));
+
+    <span class="cm">// 2. Flush pending operations</span>
+    <span class="kw">const</span> queue = JSON.<span class="fn">parse</span>(<span class="kw">await</span> storage.<span class="fn">get</span>(<span class="st">'queued_ops'</span>) || <span class="st">'[]'</span>);
+    <span class="kw">if</span> (queue.length > <span class="co">0</span>) {
+      <span class="kw">await</span> <span class="fn">processQueue</span>(queue);
+      <span class="kw">await</span> storage.<span class="fn">set</span>(<span class="st">'queued_ops'</span>, <span class="st">'[]'</span>);
+    }
+  }
+}, [isConnected]);
+
+<span class="cm">// When offline: use cached data, queue mutations</span>
+<span class="kw">if</span> (!isConnected) {
+  <span class="kw">const</span> cached = JSON.<span class="fn">parse</span>(<span class="kw">await</span> storage.<span class="fn">get</span>(<span class="st">'cached_data'</span>) || <span class="st">'{}'</span>);
+  <span class="kw">return</span> &lt;<span class="fn">OfflineView</span> data={cached} /&gt;;
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEV GUIDE ─────────────────────────────────────────── -->
+<section id="dev">
+  <div class="container">
+    <div class="section-label">Developer Guide</div>
+    <h2>Build your first extension</h2>
+    <p class="section-desc">From zero to a working Tile + Modal in under 10 minutes.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="section-label" style="margin-bottom: 8px;">1 — Setup</div>
+        <div class="code-label">
+          <span class="code-filename">Terminal</span>
+          <button class="copy-code" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code><span class="cm"># Create app</span>
+npm create @shopify/app@latest
+
+<span class="cm"># Generate POS extension</span>
+cd my-app
+shopify app generate extension
+<span class="cm"># → Select: Point of Sale UI Extension</span>
+
+<span class="cm"># Dev server (hot reload)</span>
+shopify app dev
+
+<span class="cm"># Deploy to production</span>
+shopify app deploy</code></pre>
+
+        <div class="callout info" style="margin-top: 8px;">
+          <strong>Testing on device</strong>
+          Log in to your dev store in the POS app (iOS or Android). Install your app. The extension appears automatically — no extra setup.
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom: 8px;">2 — Extension config</div>
+        <div class="code-label">
+          <span class="code-filename">shopify.extension.toml</span>
+          <button class="copy-code" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>api_version = <span class="st">"2026-07"</span>
+
+[[extensions]]
+type = <span class="st">"pos_ui_extension"</span>
+name = <span class="st">"My POS Extension"</span>
+handle = <span class="st">"my-pos-extension"</span>
+
+[[extensions.targeting]]
+target = <span class="st">"pos.home.tile.render"</span>
+module = <span class="st">"./src/Tile.tsx"</span>
+
+[[extensions.targeting]]
+target = <span class="st">"pos.home.modal.render"</span>
+module = <span class="st">"./src/Modal.tsx"</span></code></pre>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="section-label" style="margin-bottom: 8px;">3 — The Tile + Modal pattern (most common pair)</div>
+      <div class="grid-2">
+        <div>
+          <div class="code-label">
+            <span class="code-filename">src/Tile.tsx — Smart Grid entry point</span>
+            <button class="copy-code" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code><span class="kw">import</span> {
+  reactExtension, Tile, useApi
+} <span class="kw">from</span> <span class="st">'@shopify/ui-extensions-react/point-of-sale'</span>;
+
+<span class="kw">export default</span> <span class="fn">reactExtension</span>(
+  <span class="st">'pos.home.tile.render'</span>,
+  () => {
+    <span class="kw">const</span> api = <span class="fn">useApi</span>();
+
+    <span class="kw">return</span> (
+      &lt;<span class="fn">Tile</span>
+        title=<span class="st">"My App"</span>
+        subtitle=<span class="st">"Quick actions"</span>
+        onPress={() => api.action.<span class="fn">presentModal</span>()}
+      /&gt;
+    );
+  }
+);</code></pre>
+        </div>
+        <div>
+          <div class="code-label">
+            <span class="code-filename">src/Modal.tsx — Full-screen experience</span>
+            <button class="copy-code" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code><span class="kw">import</span> {
+  reactExtension, Screen, Navigator,
+  Button, Text
+} <span class="kw">from</span> <span class="st">'@shopify/ui-extensions-react/point-of-sale'</span>;
+
+<span class="kw">export default</span> <span class="fn">reactExtension</span>(
+  <span class="st">'pos.home.modal.render'</span>,
+  () => {
+    <span class="kw">const</span> api = <span class="fn">useApi</span>();
+
+    <span class="kw">return</span> (
+      &lt;<span class="fn">Navigator</span>&gt;
+        &lt;<span class="fn">Screen</span> name=<span class="st">"Home"</span> title=<span class="st">"My App"</span>&gt;
+          &lt;<span class="fn">Text</span>&gt;Your extension here&lt;/<span class="fn">Text</span>&gt;
+          &lt;<span class="fn">Button</span>
+            onPress={() => api.action.<span class="fn">dismissModal</span>()}
+          &gt;
+            Close
+          &lt;/<span class="fn">Button</span>&gt;
+        &lt;/<span class="fn">Screen</span>&gt;
+      &lt;/<span class="fn">Navigator</span>&gt;
+    );
+  }
+);</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px;">
+      <div class="section-label" style="margin-bottom: 8px;">4 — Debugging</div>
+      <div class="grid-3">
+        <div class="card" style="padding: 16px;">
+          <div class="card-tag">Console</div>
+          <h3>Dev Console in POS</h3>
+          <p>iOS: Settings → Advanced → Enable Dev Console. Android: same path. Then shake device or 3-finger tap to open.</p>
+        </div>
+        <div class="card" style="padding: 16px;">
+          <div class="card-tag">Chrome DevTools</div>
+          <h3>Android remote debug</h3>
+          <p>Navigate to <span class="inline-code">chrome://inspect</span> in Chrome desktop. Select the POS extension host from the device list.</p>
+        </div>
+        <div class="card" style="padding: 16px;">
+          <div class="card-tag">Safari Web Inspector</div>
+          <h3>iOS remote debug</h3>
+          <p>Safari → Develop → [Your Device] → Select the Extensibility Host. Full DevTools available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LIMITATIONS ───────────────────────────────────────── -->
+<section id="limitations">
+  <div class="container">
+    <div class="section-label">Known Limitations</div>
+    <h2>What you can't do (and how to work around it)</h2>
+    <p class="section-desc">Be honest about platform constraints with merchants and partners. These are real gaps with viable workarounds — knowing them makes you a better advisor.</p>
+
+    <div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-badge">Limitation 1</div>
+        <h3>Bundle size capped at 64KB</h3>
+      </div>
+      <p>The entire extension bundle must be under 64KB compressed. The UI framework runtime takes ~92% of that, leaving you ~5KB. This blocks complex multi-screen apps with rich local logic.</p>
+      <div class="workaround-label">Workarounds</div>
+      <div class="code-label"><span class="code-filename">Terminal — analyze your bundle</span></div>
+      <pre><code><span class="cm"># See what's eating your budget</span>
+npm run build -- --analyze
+npx bundlephobia &lt;package-name&gt;  <span class="cm"># check before installing</span>
+
+<span class="cm"># Prefer small libs</span>
+<span class="cm"># moment.js 67KB → date-fns 13KB</span>
+<span class="cm"># lodash 71KB → lodash-es + tree shaking</span>
+
+<span class="cm"># Externalise heavy logic to your backend</span>
+<span class="cm"># Extension fetches processed data, doesn't compute it</span></code></pre>
+      <div style="font-size: 13px; color: var(--gray-500); margin-top: 8px;">Roadmap: shared chunks between extensions from the same app is under investigation.</div>
+    </div>
+
+    <div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-badge">Limitation 2</div>
+        <h3>No native data visualization components</h3>
+      </div>
+      <p>There are no chart or graph components. <span class="inline-code">polaris-viz</span> exists for web but is not available to POS UI Extensions due to RemoteDOM rendering constraints.</p>
+      <div class="workaround-label">Workarounds</div>
+      <pre><code><span class="cm">// Option A: ASCII art charts with Text</span>
+&lt;<span class="fn">Text</span>&gt;Sales:     ████████░░ 80%&lt;/<span class="fn">Text</span>&gt;
+&lt;<span class="fn">Text</span>&gt;Inventory: ██░░░░░░░░ 20%&lt;/<span class="fn">Text</span>&gt;
+
+<span class="cm">// Option B: Generate charts server-side, return as image URL</span>
+<span class="kw">const</span> chartUrl = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">'/api/chart'</span>, {
+  method: <span class="st">'POST'</span>, body: JSON.<span class="fn">stringify</span>({ data: salesData })
+});
+
+<span class="cm">// Option C: Unicode indicators</span>
+&lt;<span class="fn">Text</span>&gt;▲ +15% vs yesterday&lt;/<span class="fn">Text</span>&gt;</code></pre>
+      <div style="font-size: 13px; color: var(--gray-500); margin-top: 8px;">Roadmap: not confirmed. No native chart components planned for POS UI Extensions currently.</div>
+    </div>
+
+    <div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-badge">Limitation 3</div>
+        <h3>Cart validation: soft enforcement only</h3>
+      </div>
+      <p>Extensions can show warnings but cannot block a sale. Staff can override everything. Shopify Functions (<span class="inline-code">cart.validation.run</span>) do NOT execute in POS — there's no hard validation capability.</p>
+      <div class="workaround-label">Workarounds</div>
+      <pre><code><span class="cm">// 1. Prominent warning (can't block, but can't be missed)</span>
+&lt;<span class="fn">Banner</span> status=<span class="st">"critical"</span>&gt;
+  ⚠️ Customer has reached purchase limit — manager approval required
+&lt;/<span class="fn">Banner</span>&gt;
+
+<span class="cm">// 2. Log overrides for audit trail</span>
+<span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">'/api/log-override'</span>, {
+  method: <span class="st">'POST'</span>,
+  body: JSON.<span class="fn">stringify</span>({ staff_id: session.staffId, timestamp: Date.<span class="fn">now</span>() })
+});</code></pre>
+      <div style="font-size: 13px; color: var(--gray-500); margin-top: 8px;">Roadmap: hard validation blocks are not on the near-term roadmap due to offline constraints.</div>
+    </div>
+
+    <div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-badge">Limitation 4</div>
+        <h3>Block extensions cannot modify cart</h3>
+      </div>
+      <p>Block targets (inline sections inside screens) are read-only. You cannot call Cart API, add items, or apply discounts from a block. Only action targets (modals) can mutate cart data.</p>
+      <div class="workaround-label">Workaround — launch a modal from the block</div>
+      <pre><code><span class="cm">// ❌ In a block extension — this will NOT work:</span>
+&lt;<span class="fn">Button</span> onPress={() => cart.<span class="fn">addLineItem</span>(...)}&gt;Add&lt;/<span class="fn">Button</span>&gt;
+
+<span class="cm">// ✅ Correct pattern — launch modal from block, mutate from modal:</span>
+<span class="cm">// Block:</span>
+&lt;<span class="fn">Button</span> onPress={() => api.action.<span class="fn">presentModal</span>()}&gt;Modify Cart&lt;/<span class="fn">Button</span>&gt;
+
+<span class="cm">// Modal (pos.cart-details.action.render):</span>
+&lt;<span class="fn">Button</span> onPress={<span class="kw">async</span> () => {
+  <span class="kw">await</span> cart.<span class="fn">addLineItem</span>(...);
+  api.action.<span class="fn">dismissModal</span>();
+}}&gt;Confirm&lt;/<span class="fn">Button</span>&gt;</code></pre>
+    </div>
+
+    <div class="limit-card">
+      <div class="limit-header">
+        <div class="limit-badge">Limitation 5</div>
+        <h3>No native custom fee primitive</h3>
+      </div>
+      <p>There's no first-class way to add a named fee to the cart (e.g., "Service Fee: $5"). Workarounds either distort the product catalog or create messy line items in reports.</p>
+      <div class="workaround-label">Common workarounds (all have trade-offs)</div>
+      <pre><code><span class="cm">// Option A: Custom Sale (distorts reports — no SKU)</span>
+<span class="kw">await</span> cart.<span class="fn">addLineItem</span>({ title: <span class="st">'Service Fee'</span>, price: <span class="st">'5.00'</span>, quantity: <span class="co">1</span> });
+
+<span class="cm">// Option B: Dummy product in catalog (cleaner reports)</span>
+<span class="cm">// → Create a "Fee" product, reference its variant ID</span>
+<span class="cm">// → Contaminates catalog with non-real products</span>
+
+<span class="cm">// ❌ Avoid: negative discount hacks — breaks reports entirely</span></code></pre>
+      <div style="font-size: 13px; color: var(--gray-500); margin-top: 8px;">Roadmap: custom fee primitive for POS Cart API has been logged as feedback. Not confirmed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ───────────────────────────────────────────────── -->
+<section id="faq">
+  <div class="container">
+    <div class="section-label">Technical FAQ</div>
+    <h2>Hardest questions, direct answers</h2>
+    <p class="section-desc">The questions that come up most often from developers building their first POS extension.</p>
+
+    <div id="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I reuse my Checkout Extension for POS?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          No — they are completely different surfaces. POS UI Extensions use <span class="inline-code">pos.*</span> targets and the POS UI Extensions APIs. Checkout Extensions use <span class="inline-code">checkout.*</span> targets and the Checkout UI Extensions APIs. The code is not portable between them.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I authenticate with my backend from an extension?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Use <span class="inline-code">api.session.getSessionToken()</span> to get a short-lived Shopify session token, then pass it as a Bearer token to your backend. Verify it server-side using Shopify's Session Token verification endpoint. Never store credentials in the extension code itself.
+          <pre><code><span class="kw">const</span> token = <span class="kw">await</span> api.session.<span class="fn">getSessionToken</span>();
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">'https://my-backend.com/api/data'</span>, {
+  headers: { <span class="st">'Authorization'</span>: <span class="st">`Bearer ${token}`</span> }
+});</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I have multiple screens in my extension?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Yes — use the Navigator + Screen pattern. This gives you a stack-based navigation inside your modal.
+          <pre><code>&lt;<span class="fn">Navigator</span>&gt;
+  &lt;<span class="fn">Screen</span> name=<span class="st">"Home"</span> title=<span class="st">"Main Screen"</span>&gt;
+    &lt;<span class="fn">Button</span> onPress={() => navigator.<span class="fn">push</span>(<span class="st">'Details'</span>)}&gt;Go&lt;/<span class="fn">Button</span>&gt;
+  &lt;/<span class="fn">Screen</span>&gt;
+  &lt;<span class="fn">Screen</span> name=<span class="st">"Details"</span> title=<span class="st">"Detail"</span>&gt;
+    &lt;<span class="fn">Button</span> onPress={() => navigator.<span class="fn">pop</span>()}&gt;Back&lt;/<span class="fn">Button</span>&gt;
+  &lt;/<span class="fn">Screen</span>&gt;
+&lt;/<span class="fn">Navigator</span>&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I persist data between sessions?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Use the Storage API. It's key-value local storage with limits: 100 entries max, 1MB per value, expires after 30 days of inactivity.
+          <pre><code><span class="cm">// Write</span>
+<span class="kw">await</span> storage.<span class="fn">set</span>(<span class="st">'prefs'</span>, JSON.<span class="fn">stringify</span>({ theme: <span class="st">'dark'</span> }));
+
+<span class="cm">// Read</span>
+<span class="kw">const</span> raw = <span class="kw">await</span> storage.<span class="fn">get</span>(<span class="st">'prefs'</span>);
+<span class="kw">const</span> data = JSON.<span class="fn">parse</span>(raw);</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I use npm packages?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Yes, but the 64KB bundle limit makes this tricky. Always check the package size with <span class="inline-code">npx bundlephobia &lt;pkg&gt;</span> before installing. Prefer smaller alternatives (<span class="inline-code">date-fns</span> over <span class="inline-code">moment</span>, lodash-es with tree shaking over full lodash). Packages that require native browser APIs or Node.js won't work in the RemoteDOM sandbox.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I share state between two extensions in the same app?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Extensions are isolated singletons — there's no direct communication channel between them. The workaround is to use Storage API as a message bus: one extension writes state, the other polls for changes.
+          <pre><code><span class="cm">// Extension A writes</span>
+<span class="kw">await</span> storage.<span class="fn">set</span>(<span class="st">'shared'</span>, JSON.<span class="fn">stringify</span>({ data, ts: Date.<span class="fn">now</span>() }));
+
+<span class="cm">// Extension B polls</span>
+useEffect(() => {
+  <span class="kw">const</span> iv = setInterval(<span class="kw">async</span> () => {
+    <span class="kw">const</span> v = <span class="kw">await</span> storage.<span class="fn">get</span>(<span class="st">'shared'</span>);
+    <span class="kw">if</span> (v) <span class="fn">setData</span>(JSON.<span class="fn">parse</span>(v).data);
+  }, <span class="co">1000</span>);
+  <span class="kw">return</span> () => clearInterval(iv);
+}, []);</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Does POS UI Extensions require Shopify Plus?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          No. POS UI Extensions work on any plan that includes <strong>POS Pro</strong>. Plus is not required. POS Lite does not support UI Extensions — only App Bridge (legacy), which is being deprecated.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I access the device camera or barcode scanner?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Yes — the Scanner API lets you read barcodes and QR codes. It works offline.
+          <pre><code><span class="kw">import</span> { useScanner } <span class="kw">from</span> <span class="st">'@shopify/ui-extensions-react/point-of-sale'</span>;
+
+<span class="kw">const</span> scanner = <span class="fn">useScanner</span>();
+<span class="kw">const</span> result = <span class="kw">await</span> scanner.<span class="fn">scanBarcode</span>();
+console.<span class="fn">log</span>(<span class="st">'Scanned:'</span>, result.barcode);</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I handle network errors gracefully?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Always wrap fetch calls in try-catch, show a Toast on failure, and fall back to cached Storage data. Never let an unhandled network error crash or freeze the extension UI.
+          <pre><code><span class="kw">try</span> {
+  <span class="kw">const</span> data = <span class="kw">await</span> <span class="fn">fetchData</span>();
+  <span class="kw">await</span> storage.<span class="fn">set</span>(<span class="st">'cache'</span>, JSON.<span class="fn">stringify</span>(data));
+  <span class="kw">return</span> data;
+} <span class="kw">catch</span> (err) {
+  api.toast.<span class="fn">show</span>(<span class="st">`Error: ${err.message}`</span>, { isError: <span class="kw">true</span> });
+  <span class="kw">const</span> cached = <span class="kw">await</span> storage.<span class="fn">get</span>(<span class="st">'cache'</span>);
+  <span class="kw">return</span> cached ? JSON.<span class="fn">parse</span>(cached) : <span class="kw">null</span>;
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I modify the receipt?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Yes, using the <span class="inline-code">pos.purchase.receipt.render</span> target. Your extension renders as a block appended to the receipt. For printing custom documents (invoices, etc.), use the Print API available since 2025-07.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CHECKLIST ─────────────────────────────────────────── -->
+<section id="checklist">
+  <div class="container">
+    <div class="section-label">Pre-Launch Checklist</div>
+    <h2>Before you ship</h2>
+    <p class="section-desc">Items that catch the most common launch issues before they reach merchants.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="section-label" style="margin-bottom: 12px;">Build & Technical</div>
+        <ul class="checklist">
+          <li>Bundle size verified under 64KB (<span class="inline-code">shopify app build</span> → check output)</li>
+          <li>Tested on both iOS <strong>and</strong> Android — don't assume parity</li>
+          <li>Offline mode validated: kill wifi, test all critical flows</li>
+          <li>All async operations have error handling + Toast feedback</li>
+          <li>Loading states implemented for operations over ~300ms</li>
+          <li>API scopes configured correctly in Partner Dashboard</li>
+          <li>Bundle analyzed for unnecessary dependencies</li>
+          <li>Console cleared of debug <span class="inline-code">console.log</span> statements</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom: 12px;">Merchant Experience</div>
+        <ul class="checklist">
+          <li>Tested end-to-end with a real merchant workflow, not just isolated units</li>
+          <li>Extension shows meaningful state when first installed (not blank)</li>
+          <li>Error messages are human-readable, not stack traces</li>
+          <li>Offline fallback surfaces useful cached data, not an empty screen</li>
+          <li>Localization set up if merchants use multiple languages</li>
+          <li>Merchant-facing documentation updated before publish</li>
+          <li>Monitoring in place for error rates post-launch</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ───────────────────────────────────────────── -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">Roadmap Status</div>
+    <h2>What's coming</h2>
+    <p class="section-desc">Current state as of July 2026. "In roadmap" means confirmed but not yet shipped. "Under investigation" means being evaluated, not guaranteed.</p>
+
+    <div class="grid-2">
+      <div class="roadmap-grid">
+        <div class="roadmap-item"><span class="rm-badge rm-shipped">Shipped</span> Polaris Web Components (new UI library) — 2025-10</div>
+        <div class="roadmap-item"><span class="rm-badge rm-shipped">Shipped</span> Direct API Access (Admin GraphQL from extension) — 2025-07</div>
+        <div class="roadmap-item"><span class="rm-badge rm-shipped">Shipped</span> Print API (custom receipts, invoices) — 2025-07</div>
+        <div class="roadmap-item"><span class="rm-badge rm-roadmap">Roadmap</span> Offline product catalog search</div>
+        <div class="roadmap-item"><span class="rm-badge rm-roadmap">Roadmap</span> Offline customer lookup</div>
+        <div class="roadmap-item"><span class="rm-badge rm-roadmap">Roadmap</span> Offline gift card support</div>
+      </div>
+      <div class="roadmap-grid">
+        <div class="roadmap-item"><span class="rm-badge rm-research">Research</span> Shared JS chunks between extensions (same app)</div>
+        <div class="roadmap-item"><span class="rm-badge rm-research">Research</span> Increase bundle size limit beyond 64KB</div>
+        <div class="roadmap-item"><span class="rm-badge rm-none">No ETA</span> Native data visualization components</div>
+        <div class="roadmap-item"><span class="rm-badge rm-none">No ETA</span> Custom fee primitive in Cart API</div>
+        <div class="roadmap-item"><span class="rm-badge rm-none">No ETA</span> Hard cart validation blocks (limited by offline)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESOURCES ─────────────────────────────────────────── -->
+<section id="resources" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-label">Resources</div>
+    <h2>Go further</h2>
+    <p class="section-desc">Official documentation, examples, and community channels.</p>
+
+    <div class="grid-2">
+      <div class="resource-list">
+        <a href="https://shopify.dev/docs/apps/build/pos" target="_blank" class="resource-item">
+          <span class="resource-icon">📖</span>
+          <div>
+            <div class="resource-name">Getting Started Guide</div>
+            <div class="resource-desc">shopify.dev/docs/apps/build/pos</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://shopify.dev/docs/api/pos-ui-extensions/latest" target="_blank" class="resource-item">
+          <span class="resource-icon">📚</span>
+          <div>
+            <div class="resource-name">API Reference (2026-07)</div>
+            <div class="resource-desc">Full targets, components, and APIs</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://shopify.dev/docs/api/pos-ui-extensions/latest/targets" target="_blank" class="resource-item">
+          <span class="resource-icon">🎯</span>
+          <div>
+            <div class="resource-name">Targets Reference</div>
+            <div class="resource-desc">All 34 extension targets documented</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://shopify.dev/changelog" target="_blank" class="resource-item">
+          <span class="resource-icon">📋</span>
+          <div>
+            <div class="resource-name">Changelog</div>
+            <div class="resource-desc">Filter by "POS Extensions" for updates</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+      </div>
+      <div class="resource-list">
+        <a href="https://github.com/Shopify/pos-ui-extensions-examples" target="_blank" class="resource-item">
+          <span class="resource-icon">💻</span>
+          <div>
+            <div class="resource-name">Code Examples (GitHub)</div>
+            <div class="resource-desc">Reference implementations from Shopify</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://community.shopify.com/c/pos" target="_blank" class="resource-item">
+          <span class="resource-icon">💬</span>
+          <div>
+            <div class="resource-name">Community Forum</div>
+            <div class="resource-desc">community.shopify.com/c/pos</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://github.com/Shopify/ui-extensions/discussions" target="_blank" class="resource-item">
+          <span class="resource-icon">🔧</span>
+          <div>
+            <div class="resource-name">GitHub Discussions</div>
+            <div class="resource-desc">Technical Q&A with the Shopify team</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+        <a href="https://partners.shopify.com/support" target="_blank" class="resource-item">
+          <span class="resource-icon">🎧</span>
+          <div>
+            <div class="resource-name">Partner Support</div>
+            <div class="resource-desc">For account and app review questions</div>
+          </div>
+          <span class="resource-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <p>Shopify Partner Solutions Engineering · July 2026 · <a href="https://shopify.dev/docs/apps/build/pos" target="_blank">shopify.dev/docs/apps/build/pos</a></p>
+</footer>
+
+<script>
+  function toggleFaq(el) {
+    el.closest('.faq-item').classList.toggle('open');
+  }
+
+  function copyCode(btn) {
+    const pre = btn.closest('.code-label').nextElementSibling;
+    const text = pre ? pre.textContent : '';
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+</script>
+</body>
+</html>
