@@ -207,6 +207,8 @@
   .kit-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
   .kit-card ul { list-style: none; padding: 0; font-size: 13px; color: var(--gray-500); display: flex; flex-direction: column; gap: 5px; }
   .kit-card li::before { content: "→ "; color: var(--primary); font-weight: 700; }
+  .kit-card a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  .kit-card a:hover { text-decoration: underline; }
 
   /* ── BUILD BLOCKS ───────────────────────── */
   .build-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
@@ -246,6 +248,18 @@
   .pro-table tr:last-child td { border-bottom: none; }
   .check { color: var(--primary); font-weight: 700; }
   .dash { color: var(--gray-400); }
+  .table-wrap { background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius); overflow-x:auto; margin-bottom: 28px; }
+  .table-wrap .pro-table td { vertical-align: top; color: var(--gray-700); }
+  .table-wrap .pro-table td:first-child { font-weight: 600; }
+  .group-row td { background: var(--gray-50); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--primary) !important; }
+  .rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .rule { display:flex; gap:12px; background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius); padding:16px 18px; }
+  .rule-num { flex:0 0 28px; height:28px; border-radius:50%; background: var(--primary-light); color: var(--primary); font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .rule h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+  .rule p { font-size:13px; color: var(--gray-500); line-height:1.55; }
+  .callout { background: var(--accent-light); border:1px solid #fed7aa; border-radius: var(--radius); padding:16px 20px; font-size:13.5px; color: var(--gray-700); margin-bottom: 24px; }
+  .sub-h { font-size:17px; font-weight:700; margin: 36px 0 14px; }
+  .sub-p { font-size:14px; color: var(--gray-500); margin: -6px 0 16px; }
 
   /* ── EARN SECTION ───────────────────────── */
   .earn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -296,6 +310,7 @@
     </svg>
     POS Partner Hub
   </span>
+  <a href="#new">What's New</a>
   <a href="#learn">Learn</a>
   <a href="#qualify">Qualify</a>
   <a href="#launch">Launch</a>
@@ -325,39 +340,103 @@
 </div>
 
 <div class="new-strip">
-  🆕 <strong>2026 updates:</strong> POS v11.5 · Offline extensions (POS 11.0+) · Direct GraphQL from extensions · Auto app auth · Tap to Pay expansion · <a href="https://www.shopify.com/editions" target="_blank">See all Shopify Editions →</a>
+  🆕 <strong>Fall '26 Edition:</strong> Local delivery from POS · Scheduled stock counts · 20 barcodes per variant · POS devices managed in admin · Printing API &amp; background extensions · <a href="#new">See what's new for POS →</a>
 </div>
+
+<!-- ── 00 WHAT'S NEW ─────────────────────────── -->
+<section id="new">
+  <div class="container">
+    <div class="section-label">00 — What's New</div>
+    <h2>Fall '26 Edition — POS highlights</h2>
+    <p class="section-desc">The retail and developer updates from Shopify Editions Fall '26 that matter most for POS projects. Availability varies by plan, country, and rollout, so check the linked page before you scope anything around it.</p>
+
+    <div class="kit-grid" style="margin-bottom:20px;">
+      <div class="kit-card">
+        <h4>🛒 Checkout &amp; customers</h4>
+        <ul>
+          <li><a href="https://www.shopify.com/blog/automatically-identify-more-customers-with-pos" target="_blank">Wider in-store customer recognition</a> (Shop Pay / Shopify Payments) and digital receipts to the Shop app</li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/receipt-management/customer-receipt-selection#customer-experience" target="_blank">Faster checkout flows</a> for cash and split payments</li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/adding-online-cart-items-to-pos-cart" target="_blank">Pull up a known customer's abandoned online cart</a> in POS</li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/local-delivery-orders" target="_blank">Local delivery orders created from POS</a></li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/manage-recent-carts" target="_blank">Recent carts saved across devices</a> + persistent mobile cart</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>📦 Inventory &amp; catalog</h4>
+        <ul>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/inventory-management/changing-inventory-quantities-pos#perform-a-stock-count" target="_blank">Scheduled stock counts in POS</a> + <a href="https://help.shopify.com/manual/products/inventory/inventory-counts" target="_blank">native stock counts</a></li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/inventory-management/searching-for-products#barcode-scanner" target="_blank">Scan any barcode</a> (GTIN, supplier codes) — <a href="https://help.shopify.com/en/manual/products/add-update-products#adding-barcodes" target="_blank">up to 20 per variant</a></li>
+          <li><a href="https://help.shopify.com/manual/products/inventory/inventory-transfers/creating-and-processing-transfers#add-metafields" target="_blank">Metafields on transfers</a></li>
+          <li><a href="https://help.shopify.com/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/purchase-orders" target="_blank">Purchase order analytics</a></li>
+          <li><a href="https://www.shopify.com/blog/shopify-retail-roundup-september-2026-v11-15-11-16#filter-pos-search" target="_blank">POS search filters</a> + <a href="https://help.shopify.com/en/manual/sell-in-person/getting-started/smart-grid#add-suggested-tiles" target="_blank">Smart Grid suggested tiles</a></li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>👥 Staff &amp; devices</h4>
+        <ul>
+          <li><a href="https://help.shopify.com/manual/sell-in-person/hardware/manage-pos-devices" target="_blank">Manage (and revoke) POS devices from the admin</a></li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/troubleshooting#connectivity" target="_blank">Connectivity status</a> on the POS home screen</li>
+          <li><a href="https://help.shopify.com/en/manual/your-account/users/manage-users" target="_blank">POS and admin users managed together</a> (org-level roles are Plus only) + <a href="https://help.shopify.com/en/manual/your-account/users/import-users" target="_blank">bulk staff CSV import</a></li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/staff-management/pos-activity-log" target="_blank">POS activity log</a></li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/add-staff-to-sale" target="_blank">Attribute every sale to an associate</a></li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>💳 Payments, receipts &amp; reach</h4>
+        <ul>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/payment-management/accepting-local-payments#activate-local-payment-methods-for-shopify-pos" target="_blank">In-store local payment methods</a>: Alipay, WeChat Pay, Satispay, Scalapay, GrabPay (requires Shopify Payments)</li>
+          <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/payment-management/card-payments#card-brands" target="_blank">Cartes Bancaires</a> on WisePad 3 and POS Terminal (France)</li>
+          <li><a href="https://help.shopify.com/manual/sell-in-person/shopify-pos/customize-pos/printed-receipts" target="_blank">Customizable printed receipt template</a> (incl. tax summaries for EU/UK/CA)</li>
+          <li><a href="https://help.shopify.com/en/manual/inventory-and-locations/locations/setup#create-and-modify-locations" target="_blank">Retail locations discoverable by AI agents</a></li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🛠️ For developers</h4>
+        <ul>
+          <li><a href="https://shopify.dev/docs/api/pos-ui-extensions/latest/target-apis/platform-apis/printing-api" target="_blank">Printing API</a> for POS UI extensions</li>
+          <li><a href="https://shopify.dev/docs/api/pos-ui-extensions/latest/targets/app-background" target="_blank">Background extensions</a> (app-background target)</li>
+          <li><a href="https://shopify.dev/docs/api/pos-ui-extensions/2026-10-rc/target-apis/platform-apis/storage-api" target="_blank">Storage API</a> (2026-10 release candidate)</li>
+          <li><a href="https://shopify.dev/docs/api/admin-graphql/latest/queries/inventoryPurchaseOrders" target="_blank">Purchase orders in the Admin API</a></li>
+          <li><a href="https://shopify.dev/docs/apps/build/inventory-management-apps/receiving-external-transfers-in-pos" target="_blank">Guide: receiving external (ERP) transfers in POS</a></li>
+        </ul>
+      </div>
+    </div>
+    <a href="https://www.shopify.com/editions/fall2026" target="_blank" class="card-link" style="font-weight:600;">See the full Fall '26 Edition →</a>
+  </div>
+</section>
 
 <!-- ── 01 LEARN ─────────────────────────────── -->
 <section id="learn">
   <div class="container">
     <div class="section-label">01 — Learn</div>
     <h2>Training &amp; Documentation</h2>
-    <p class="section-desc">Start here. The Academy paths are the recommended backbone for any partner team covering sales, implementation, and operations.</p>
+    <p class="section-desc">Start here. These are the official docs your team will use every day: the Help Center for setup and operations, shopify.dev for builds, and Sidekick inside the merchant's admin.</p>
+
+    <div class="callout"><strong>Heads up:</strong> Shopify Academy is being retired on October 29, 2026, so the Academy learning paths that used to live here have been replaced with the official documentation below.</div>
 
     <div class="grid-3">
-      <a href="https://www.shopifyacademy.com/path/shopify-pos-launch-and-operations" target="_blank" class="card featured-single">
-        <div class="card-icon">🎓</div>
-        <div class="card-tag">Recommended · ~4 hrs · 5 courses</div>
-        <h3>POS Launch &amp; Operations Learning Path</h3>
-        <p>The complete course sequence for your whole team: setup, hardware, staff management, daily operations, and growth optimization. This is the backbone — complete before any client engagement.</p>
-        <div class="card-link">Open in Shopify Academy →</div>
+      <a href="https://help.shopify.com/en/partners" target="_blank" class="card featured-single">
+        <div class="card-icon">🤝</div>
+        <div class="card-tag">Recommended · Partner reference</div>
+        <h3>Partner Help Center</h3>
+        <p>The official reference for the Partner Program: how partners earn, leads and referrals, the Partner Dashboard, and program rules. Start here before any client engagement.</p>
+        <div class="card-link">Open Partner Help Center →</div>
       </a>
 
-      <a href="https://www.shopifyacademy.com/path/shopify-development-fundamentals" target="_blank" class="card">
+      <a href="https://shopify.dev/docs/apps/build/pos" target="_blank" class="card">
         <div class="card-icon">⚙️</div>
-        <div class="card-tag">Technical · Required for dev team</div>
-        <h3>Shopify Development Fundamentals</h3>
-        <p>Core Shopify platform knowledge for your technical team before building POS extensions or integrations.</p>
-        <div class="card-link">Open in Shopify Academy →</div>
+        <div class="card-tag">Technical · For your dev team</div>
+        <h3>Build for Shopify POS</h3>
+        <p>Guides and tutorials on shopify.dev to scaffold POS UI extensions with Shopify CLI, pick the right targets, and follow POS best practices.</p>
+        <div class="card-link">Open on shopify.dev →</div>
       </a>
 
-      <a href="https://www.shopifyacademy.com/path/customizing-the-pos-experience" target="_blank" class="card">
-        <div class="card-icon">🔌</div>
-        <div class="card-tag">Technical · POS extensibility</div>
-        <h3>Customizing the POS Experience</h3>
-        <p>POS UI Extensions course. How to build custom tiles, actions, and embedded workflows inside the Shopify POS app.</p>
-        <div class="card-link">Open in Shopify Academy →</div>
+      <a href="https://help.shopify.com/en/manual/shopify-admin/productivity-tools/sidekick" target="_blank" class="card">
+        <div class="card-icon">✨</div>
+        <div class="card-tag">AI · Inside the admin</div>
+        <h3>Sidekick</h3>
+        <p>Shopify's AI assistant in the admin. Ask how-to questions, build reports, and run catalog and inventory checks during a launch. Sidekick shows changes for review before applying anything.</p>
+        <div class="card-link">Open in Help Center →</div>
       </a>
 
       <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos" target="_blank" class="card">
@@ -566,6 +645,119 @@
         </div>
       </div>
     </div>
+
+    <!-- Launch field guide (adapted from the EMEA POS Bootcamp playbook) -->
+    <h3 class="sub-h">The 10 Rules for a Smooth Launch</h3>
+    <p class="sub-p">Field-tested guidance from real partner launches, adapted from the EMEA POS Bootcamp 2026 launch playbook. Short on time? These ten rules carry most of the value.</p>
+
+    <div class="callout"><strong>The one rule everything rests on:</strong> if a POS device is being set up, paired, or logged in for the first time on opening morning, the launch is already late. Set up and label hardware at HQ, test it in the real store and location, and let store staff simply unbox, plug in, and sell.</div>
+
+    <div class="rule-grid">
+      <div class="rule"><div class="rule-num">1</div><div><h4>Set up at HQ, test for real</h4><p>Build, pair, and label every kit at HQ, then test it on the production store and the location it will run. There's no sandbox for POS hardware.</p></div></div>
+      <div class="rule"><div class="rule-num">2</div><div><h4>Name every system and its owner</h4><p>ERP, CRM, IMS, OMS, tax, payment gateway, online store, legacy POS. Anything left unnamed becomes a surprise in launch week.</p></div></div>
+      <div class="rule"><div class="rule-num">3</div><div><h4>Payments before readers</h4><p>Confirm the POS payments country and verify Shopify Payments before shipping a single reader. Without it there's no unified customer view or consolidated reporting.</p></div></div>
+      <div class="rule"><div class="rule-num">4</div><div><h4>A designated admin for device setup</h4><p>The first login on a new or reset device needs the store owner or a user with the <em>Set up new or updated POS devices</em> permission. A collaborator account is not POS access.</p></div></div>
+      <div class="rule"><div class="rule-num">5</div><div><h4>One version everywhere</h4><p>One POS app version, one Hub firmware level, one major OS version pinned per wave and recorded per device.</p></div></div>
+      <div class="rule"><div class="rule-num">6</div><div><h4>Test → Pilot → Waves</h4><p>Named waves, each with its own go/no-go. A messy wave slows down the next one. Never during BFCM or a peak period.</p></div></div>
+      <div class="rule"><div class="rule-num">7</div><div><h4>Train on a proven POS</h4><p>Train the trainer plus one or two super users per store, 2–4 weeks ahead, on hardware that has already passed a real sale.</p></div></div>
+      <div class="rule"><div class="rule-num">8</div><div><h4>Fix the store network first</h4><p>If it works on a mobile hotspot and fails on store Wi-Fi, it's the store network. Wire the counter and plan redundancy where offline isn't an option.</p></div></div>
+      <div class="rule"><div class="rule-num">9</div><div><h4>Replace, don't debug</h4><p>Bring a spare bag. It's usually a cable or a reader. Never spend 40 minutes debugging in front of a queue.</p></div></div>
+      <div class="rule"><div class="rule-num">10</div><div><h4>Cover the whole first week</h4><p>Be on site the day before. Open on a quiet Tuesday morning, never a Friday or BFCM. Named coverage for week one, then monthly KPI reviews.</p></div></div>
+    </div>
+    <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px;"><strong>Bonus rule — let AI do the heavy lifting, not the judgment.</strong> Use Sidekick for reports, data checks, and drafts. Keep go/no-go, scope, and store-day decisions with named people.</p>
+
+    <!-- Common launch problems -->
+    <h3 class="sub-h">Common Launch Problems — Symptom, Cause, Fix</h3>
+    <p class="sub-p">The issues that show up most often in real launches. Most are avoidable with the rules above.</p>
+    <div class="table-wrap">
+      <table class="pro-table">
+        <thead><tr><th style="width:28%">Symptom</th><th style="width:32%">Likely cause</th><th>What to do</th></tr></thead>
+        <tbody>
+          <tr class="group-row"><td colspan="3">Access &amp; devices</td></tr>
+          <tr><td>Partner can't log in to POS on the merchant's device</td><td>A collaborator account doesn't grant POS access</td><td>Have the merchant create a staff user with the right POS permissions, including <em>Set up new or updated POS devices</em>.</td></tr>
+          <tr><td>Hub won't connect over Ethernet or firmware won't update</td><td>Hub firmware is tied to the POS app version</td><td>Check the POS app version first. Pin app, firmware, and OS per wave.</td></tr>
+          <tr><td>Catalog looks incomplete on a new device</td><td>Initial catalog sync can take hours on large catalogs</td><td>Set devices up the day before (or earlier), never on opening morning.</td></tr>
+          <tr class="group-row"><td colspan="3">Payments</td></tr>
+          <tr><td>Readers arrived but can't take payments</td><td>Shopify Payments not verified, or POS payments country not supported</td><td>Verify Payments and confirm country support before ordering hardware.</td></tr>
+          <tr><td>Mystery payments on day two</td><td>Small test sales on production are real orders</td><td>Refund them right away, tell finance, and keep them to a few.</td></tr>
+          <tr><td>Some prepaid or co-branded gift cards declined (restricted / code 62)</td><td>The issuer has to whitelist the new acceptor (new MID)</td><td>The merchant contacts the issuer. It can take 4+ weeks and it's not a Shopify ticket, so start early.</td></tr>
+          <tr><td>Staff can't open or close the cash session</td><td>The first cash session was never rehearsed</td><td>Run float → sale → close at HQ. Cashless stores should prove the "N/A" too.</td></tr>
+          <tr><td>In-person payments settle to the wrong entity</td><td>Mixed ownership or two countries on one Payments setup</td><td>Agree entity and settlement per location up front; one local Payments entity and bank account per country.</td></tr>
+          <tr class="group-row"><td colspan="3">Catalog &amp; inventory</td></tr>
+          <tr><td>Products missing or showing zero stock in POS</td><td>Wrong location, or inventory not assigned to the store location</td><td>Check location assignment and stock per location before go-live.</td></tr>
+          <tr><td>Barcodes don't scan</td><td>Barcodes entered in the SKU field</td><td>Move them to the barcode field (up to 20 per variant as of Fall '26).</td></tr>
+          <tr><td>Receipts missing legal lines, or email receipts never arrive</td><td>Receipt template and email receipts were never tested</td><td>Review the printed receipt template and send a test email receipt during the pilot.</td></tr>
+          <tr class="group-row"><td colspan="3">Scope &amp; integrations</td></tr>
+          <tr><td>A day-one workflow is missing at launch</td><td>Legacy gift cards, loyalty, order history, or OMS routing weren't scoped</td><td>List every day-one workflow in discovery and flag fiscal-market requirements early.</td></tr>
+          <tr><td>"Unknown" integration breaks in launch week</td><td>A system nobody owned</td><td>Rule 2: name every system and its owner in the SOW.</td></tr>
+          <tr class="group-row"><td colspan="3">Network &amp; performance</td></tr>
+          <tr><td>Works on a hotspot, fails on store Wi-Fi</td><td>Store network: guest isolation, blocked ports, weak signal</td><td>Fix the network with merchant IT and wire the counter.</td></tr>
+          <tr><td>POS slows down or freezes after a while</td><td>An extension polling too often or leaking memory</td><td>Load-test extensions for 30+ minutes of continuous use before launch.</td></tr>
+          <tr><td>Store staff can't open a Support case</td><td>POS-only staff can't authenticate with Shopify Support</td><td>Name someone on site who can authenticate with Support.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Opening-day sheet -->
+    <h3 class="sub-h">Opening-Day Checklist (print one per store)</h3>
+    <p class="sub-p">If a "must be true now" line is still open when customers arrive, you're still setting up hardware, not launching.</p>
+    <div class="kit-grid">
+      <div class="kit-card">
+        <h4>✅ Must be true now</h4>
+        <ul>
+          <li>Hardware set up at HQ, labeled, charged, on the wave's app and firmware version</li>
+          <li>Live test sale already completed at this location</li>
+          <li>Day-before setup done (or this is the day before, not opening day)</li>
+          <li>Spare bag on site: reader, Hub cable, power supply, paper, hotspot, adapter</li>
+          <li>Someone who can set up POS devices is available</li>
+          <li>Legacy POS off the counter (if migrating)</li>
+          <li>Staff trained on a proven POS, super user on shift</li>
+          <li>Contingency plan known if the store can't operate</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🚪 Before opening the doors</h4>
+        <ul>
+          <li>Power → network → open POS. Swap from the spare bag if a device fails</li>
+          <li>Don't re-pair unless something broke</li>
+          <li>The location on screen is this store</li>
+          <li>Search, scan an item from the shelf, test printer, reader, and cash drawer</li>
+          <li>Small card sale + refund + receipt</li>
+          <li>Staff PIN works on every device</li>
+          <li>Previous cash session closed, new one started with float</li>
+          <li>On-site owner and escalation path on a card by the POS</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>👀 During the first hours</h4>
+        <ul>
+          <li>Watch the first 10 live sales: contactless, chip, a return if one comes up</li>
+          <li>Orders land in the admin under the right location</li>
+          <li>No extension or app freeze after 30+ minutes of continuous use</li>
+          <li>Staff know who to call</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🌙 First-day close</h4>
+        <ul>
+          <li>Cash session closed and reconciled</li>
+          <li>Issues logged while fresh: what, device ID, time</li>
+          <li>Spares used today logged for restock</li>
+          <li>Payments / ERP / inventory check if in scope (Sidekick: today's sales by location)</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>🧯 If something fails</h4>
+        <ul>
+          <li>Swap from the spare bag. Don't debug for 40 minutes in front of a queue</li>
+          <li>Works on hotspot, not store Wi-Fi → store network → merchant IT</li>
+          <li>New or reset device → POS device setup in admin, then location, then wait for sync</li>
+          <li>Hub/firmware issue → check the POS app version first</li>
+          <li>Prepaid card declined (code 62) → merchant contacts the issuer</li>
+          <li>Platform or payments issue → Shopify Support case opened by someone who can authenticate</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -711,6 +903,22 @@
       <div class="card-link">Open developer docs →</div>
     </a>
 
+    <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">New in Fall '26 for POS Extensions</h3>
+    <div class="build-grid" style="margin-bottom:32px;">
+      <a href="https://shopify.dev/docs/api/pos-ui-extensions/latest/target-apis/platform-apis/printing-api" target="_blank" class="build-card">
+        <h4>🖨️ Printing API</h4>
+        <p>Discover connected hardware printers and print documents from your extension, through a selected printer or the system print dialog.</p>
+      </a>
+      <a href="https://shopify.dev/docs/api/pos-ui-extensions/latest/targets/app-background" target="_blank" class="build-card">
+        <h4>🌙 Background Extensions</h4>
+        <p>The app-background target runs when POS is ready and stays active for the whole session. Listen for POS events (like completed transactions or cart changes) and run non-UI logic.</p>
+      </a>
+      <a href="https://shopify.dev/docs/api/pos-ui-extensions/2026-10-rc/target-apis/platform-apis/storage-api" target="_blank" class="build-card">
+        <h4>💾 Storage API (2026-10 RC)</h4>
+        <p>Persistent local storage on the POS device, isolated to your extension, that survives sessions, restarts, and target changes. Currently in the 2026-10 release candidate.</p>
+      </a>
+    </div>
+
     <!-- Core APIs -->
     <h3 style="font-size:17px; font-weight:700; margin-bottom:14px;">Core APIs for POS Integrations</h3>
     <div class="build-grid">
@@ -734,10 +942,22 @@
         <h4>📦 Inventory API</h4>
         <p>Multi-location inventory management. Sync stock levels, adjust quantities, and manage inventory across all store locations.</p>
       </a>
-      <a href="https://shopify.dev/docs/apps/fulfillment/fulfillment-orders-apps" target="_blank" class="build-card">
+      <a href="https://shopify.dev/docs/apps/build/orders-fulfillment" target="_blank" class="build-card">
         <h4>📬 Fulfillment Orders API</h4>
         <p>For BOPIS, ship-from-store, and click-and-collect flows. Required for custom fulfillment routing and 3PL integrations.</p>
       </a>
+      <a href="https://shopify.dev/docs/apps/build/inventory-management-apps/receiving-external-transfers-in-pos" target="_blank" class="build-card">
+        <h4>🚚 Receiving External Transfers in POS</h4>
+        <p>New guide for ERP → store replenishment: the ERP creates the transfer and shipment via the Admin API, and staff receive it in POS. Requires API 2026-10+ and idempotency keys. POS receives quantities only; rejects and cancellations happen in the admin or API.</p>
+      </a>
+      <a href="https://shopify.dev/docs/api/admin-graphql/latest/queries/inventoryPurchaseOrders" target="_blank" class="build-card">
+        <h4>🧾 Purchase Orders API</h4>
+        <p>New in Fall '26: read purchase orders through the Admin API (<code>inventoryPurchaseOrders</code>) to sync supplier orders with an ERP or replenishment tool.</p>
+      </a>
+    </div>
+
+    <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius: var(--radius); padding:18px 22px; margin-top:20px; font-size:13.5px; color:var(--gray-700);">
+      <strong>🧩 ERP → POS transfer pattern:</strong> create with <code>inventoryTransferCreateAsReadyToShip</code> → ship with <code>inventoryShipmentCreateInTransit</code> → store receives in POS (or via <code>inventoryShipmentReceive</code>). Listen to <code>inventory_shipments/receive_items</code> and <code>inventory_transfers/updated</code> to sync received quantities back to the ERP. A companion guide for stock counts is planned once that feature is GA.
     </div>
 
     <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius: var(--radius); padding:18px 22px; margin-top:20px; font-size:13.5px; color:var(--gray-700);">
@@ -818,6 +1038,90 @@
         </div>
       </div>
     </div>
+
+    <!-- Partner journey -->
+    <h3 class="sub-h">Working with Shopify — The 6-Step Partner Journey</h3>
+    <p class="sub-p">From qualification to post-launch, as presented at the EMEA POS Bootcamp 2026.</p>
+    <div class="kit-grid">
+      <div class="kit-card">
+        <h4>1 · Qualify <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You · 30 min</span></h4>
+        <ul>
+          <li>Account audit: GMV, number of stores, tech stack, retail ambition</li>
+          <li>Qualify before you demo. A generic demo costs credibility</li>
+          <li>AI: for merchants already on Shopify, ask Sidekick for sales by channel and month, product/variant counts, and customer data quality</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>2 · Submit a POS lead <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You · 5 min</span></h4>
+        <ul>
+          <li>Partner Dashboard → Sales › Leads › Submit a POS lead</li>
+          <li>Let your Shopify partner manager know to kick off co-selling</li>
+          <li>AI: turn discovery notes into a clean lead summary (stores, GMV band, stack, timeline)</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>3 · Technical discovery &amp; demo <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You + Shopify</span></h4>
+        <ul>
+          <li>Joint POS demo with a Shopify POS specialist</li>
+          <li>Scope integrations (ERP, CRM, loyalty) and the complex requirements that move the date</li>
+          <li>AI: use the Shopify AI Toolkit / Dev MCP in your coding agent to check APIs, POS UI extensions, and integration feasibility</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>4 · Proposal &amp; SOW <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You + Shopify</span></h4>
+        <ul>
+          <li>Price the project and make sure you're registered as the partner on the deal, SOW attached</li>
+          <li>Write down what's out of scope</li>
+          <li>AI: draft the SOW from your readiness checklist; each "done when" becomes an acceptance criterion</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>5 · Implementation &amp; launch <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You · 1–4 months</span></h4>
+        <ul>
+          <li>POS setup, integrations, staff training, Shopify Payments activated at go-live</li>
+          <li>Follow the <a href="#launch">10 rules and opening-day checklist</a></li>
+          <li>AI: Sidekick for catalog, inventory, and discount checks plus Flow automations</li>
+        </ul>
+      </div>
+      <div class="kit-card">
+        <h4>6 · Post-launch follow-up <span style="font-weight:500;color:var(--gray-400);font-size:12px;">You + Shopify</span></h4>
+        <ul>
+          <li>Monthly retail KPI report</li>
+          <li>Next steps with Shopify: new stores, phygital journeys, international expansion</li>
+          <li>AI: Sidekick builds the monthly KPI report by location; Flow automates low-stock and follow-up alerts</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Service packages -->
+    <h3 class="sub-h">Turn a POS Project into an Agency Practice</h3>
+    <p class="sub-p">Every POS project supports several service packages. The value isn't just in the setup — it's in securing the launch and driving adoption.</p>
+    <div class="table-wrap">
+      <table class="pro-table">
+        <thead><tr><th>Retail analysis</th><th>Build</th><th>Deployment</th><th>Training</th><th>Operate &amp; optimize</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:400;">Audit, workflows, teams, store constraints, business goals</td><td>Shopify POS setup, locations, roles, payments, omnichannel journeys</td><td>Hardware, installation, testing, store environment</td><td>Managers, associates, internal champions, documentation</td><td>Post-launch support, new stores, new use cases</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-tag">Tier 1</div>
+        <h3>POS Launch — launch it right</h3>
+        <p>Retail audit · minimum viable POS · base configuration · initial training · go-live support</p>
+      </div>
+      <div class="card">
+        <div class="card-tag">Tier 2</div>
+        <h3>POS Scale — roll out everywhere</h3>
+        <p>Multi-location · hardware and installation · store processes · rollout support · operational documentation</p>
+      </div>
+      <div class="card">
+        <div class="card-tag">Tier 3</div>
+        <h3>Unified Commerce Growth</h3>
+        <p>Omnichannel optimization · new use cases · retail reporting · store expansion · managed services</p>
+      </div>
+    </div>
+    <p style="font-size:13px; color:var(--gray-500); margin-top:14px;"><strong>Key idea:</strong> the project doesn't end at go-live — it really starts when store teams use POS every day. Sell ongoing operations: monitoring, permissions, offline procedures, and audits.</p>
   </div>
 </section>
 
@@ -923,7 +1227,7 @@
             <li><strong>BOPIS (Buy Online, Pickup In-Store):</strong> staff create same-store pickup orders from the POS cart (v11.3). Customer notifications fire automatically.</li>
             <li><strong>Buy In-Store, Ship to Home:</strong> item out at this location but in stock elsewhere — offer to ship home, waive shipping, add a discount, complete one checkout covering both.</li>
             <li><strong>Browse In-Store, Buy Online (Email Cart):</strong> customer isn't ready — staff emails the cart so they can complete online. Captures sales that would otherwise walk out.</li>
-            <li><strong>Local delivery:</strong> configured under Fulfillment locations alongside pickup. The four modes together make the strongest flexible-fulfillment story.</li>
+            <li><strong>Local delivery:</strong> configured under Fulfillment locations alongside pickup, and as of Fall '26 staff can <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/order-management/local-delivery-orders" target="_blank">create local delivery orders right from POS</a>. The four modes together make the strongest flexible-fulfillment story.</li>
           </ul>
         </div>
       </div>
@@ -935,7 +1239,7 @@
           <ul>
             <li><strong>Barcode-driven workflow:</strong> staff scan items using the iPad's built-in camera or an external scanner during pick/pack and receiving — no separate handheld device required. Strong differentiator vs. legacy POS systems.</li>
             <li>Inventory is decremented live and visible across all locations instantly.</li>
-            <li><strong>Note to flag:</strong> transfers must be created in Admin first; POS supports fulfilling and receiving only. Requires POS Pro.</li>
+            <li><strong>Note to flag:</strong> transfers are created in Admin or by an ERP via the Admin API (see <a href="#build">Receiving External Transfers</a>); POS supports fulfilling and receiving only. Requires POS Pro.</li>
           </ul>
         </div>
       </div>
@@ -1038,9 +1342,11 @@
     <p class="section-desc">Everything in one place.</p>
 
     <div class="ref-grid">
-      <a href="https://www.shopifyacademy.com/path/shopify-pos-launch-and-operations" target="_blank" class="ref-link"><span class="ic">🎓</span>POS Launch &amp; Ops Path</a>
-      <a href="https://www.shopifyacademy.com/path/customizing-the-pos-experience" target="_blank" class="ref-link"><span class="ic">🔌</span>Customizing POS (course)</a>
-      <a href="https://www.shopifyacademy.com/path/shopify-development-fundamentals" target="_blank" class="ref-link"><span class="ic">⚙️</span>Dev Fundamentals (course)</a>
+      <a href="https://help.shopify.com/en/partners" target="_blank" class="ref-link"><span class="ic">🤝</span>Partner Help Center</a>
+      <a href="https://shopify.dev/docs/apps/build/pos" target="_blank" class="ref-link"><span class="ic">⚙️</span>Build for POS (shopify.dev)</a>
+      <a href="https://help.shopify.com/en/manual/shopify-admin/productivity-tools/sidekick" target="_blank" class="ref-link"><span class="ic">✨</span>Sidekick</a>
+      <a href="https://shopify.dev/docs/apps/build/inventory-management-apps/receiving-external-transfers-in-pos" target="_blank" class="ref-link"><span class="ic">🚚</span>External Transfers → POS</a>
+      <a href="https://www.shopify.com/editions/fall2026" target="_blank" class="ref-link"><span class="ic">🍂</span>Fall '26 Edition</a>
       <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos" target="_blank" class="ref-link"><span class="ic">📖</span>POS Manual (Help Center)</a>
       <a href="https://help.shopify.com/en/manual/sell-in-person/getting-started" target="_blank" class="ref-link"><span class="ic">🚀</span>POS Getting Started</a>
       <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/faq" target="_blank" class="ref-link"><span class="ic">❓</span>POS FAQ</a>
@@ -1065,7 +1371,7 @@
 </section>
 
 <footer>
-  <div>Shopify POS: Partner Resource Hub · Compiled by <strong>Sergio Vázquez</strong> · PSE Team · Updated May 2026</div>
+  <div>Shopify POS: Partner Resource Hub · Compiled by <strong>Sergio Vázquez</strong> · PSE Team · Updated October 2026</div>
   <div style="margin-top:8px; opacity:.6;">For partner use only. All links point to official Shopify public documentation.</div>
 </footer>
 
